@@ -1,0 +1,119 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+	<title>Create Noun - PyLatein</title>
+	{% load bootstrap %}
+{#	<script src="{% static 'js/declination.js' %}"></script>#}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+        <h1 class="page-header">Create a new Noun!</h1>
+				<div class="jumbotron" style="background-color: orange; padding: 10px;">
+					<h3>Fill the table quickly!</h3>
+					<div class="form-group">
+						<label class="control-label" for="declination">Declination</label>
+						<div class=" ">
+							<select class="form-control" id="declination" name="declination" onchange="updateUI()">
+                <option value="1A">A-Deklination</option>
+                <option value="1O">O-Deklination</option>
+                <option value="3K">3. Deklination Konsonantenstämme</option>
+                <option value="3M">3. Deklination Mischstämme</option>
+                <option value="3I">3. Deklination I-Stämme</option>
+                <option value="5E">E-Deklination</option>
+                <option value="5U">U-Deklination</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="stem">Stem</label>
+						<div class=" ">
+							<input type="text" class="form-control" id="stem" name="stem">
+						</div>
+					</div>
+					<div class="form-group hidden" id="sg1_group">
+						<label class="control-label" for="sg1">Nominative Sg.</label>
+						<div class=" ">
+							<input type="text" class="form-control" id="sg1" name="stem">
+						</div>
+					</div>
+          <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
+				</div>
+				<div class="jumbotron" style="padding: 10px;">
+					<form role="form" method="post" action="{% url 'create_noun' %}">
+						{% csrf_token %}
+						{{ form.translation|bootstrap }}
+						{{ form.genus|bootstrap }}
+						<table class="table table-bordered table-responsive">
+							<tr>
+								<th></th>
+								<th>Singular</th>
+								<th>Plural</th>
+							</tr>
+							<tr>
+								<th>1.</th>
+								<td>{{ form.sg1|bootstrap_inline }}</td>
+								<td>{{ form.pl1|bootstrap_inline }}</td>
+							</tr>
+							<tr>
+								<th>2.</th>
+								<td>{{ form.sg2|bootstrap_inline }}</td>
+								<td>{{ form.pl2|bootstrap_inline }}</td>
+							</tr>
+							<tr>
+								<th>3.</th>
+								<td>{{ form.sg3|bootstrap_inline }}</td>
+								<td>{{ form.pl3|bootstrap_inline }}</td>
+							</tr>
+							<tr>
+								<th>4.</th>
+								<td>{{ form.sg4|bootstrap_inline }}</td>
+								<td>{{ form.pl4|bootstrap_inline }}</td>
+							</tr>
+							<tr>
+								<th>5.</th>
+								<td>{{ form.sg5|bootstrap_inline }}</td>
+								<td>{{ form.pl5|bootstrap_inline }}</td>
+							</tr>
+							<tr>
+								<th>6.</th>
+								<td>{{ form.sg6|bootstrap_inline }}</td>
+								<td>{{ form.pl6|bootstrap_inline }}</td>
+							</tr>
+						</table>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+  {% load staticfiles %}
+  <script src="{% static 'js/grammar/decline.js' %}"></script>
+	<script>
+  function fill_form(){
+    var result=decline($("#sg1").val(), $("#stem").val(),
+        $("#id_genus").val(), $("#declination").val());
+    for (var i = 0; i < cases.length; i++){
+      $("#id_"+cases[i]).val(result[cases[i]]);
+    }
+  }
+  function updateUI(){
+    if (["3K", "3M", "3I"].indexOf($("#declination").val()) > -1){
+      $("#sg1_group").removeClass("hidden");
+    }
+    else{
+      $("#sg1_group").addClass("hidden");
+    }
+  }
+  $(document).ready(function(){
+    updateUI();
+  });
+	</script>
+{% endblock %} scripts %}

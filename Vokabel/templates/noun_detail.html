@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+	<title>Show Noun - PyLatein</title>
+	{% load bootstrap %}
+{% endblock %}
+
+{% block body %}
+	<div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-2 col-sm-12">
+		<h3>{{ noun.sg1 }} [{{ noun.genus }}]</h3>
+		<p>{{ noun.translation }}</p>
+		<table class="table table-bordered">
+			<tr>
+				<th></th>
+				<th>Singular</th>
+				<th>Plural</th>
+			</tr>
+			<tr>
+				<th>1.</th>
+				<td>{{ noun.sg1 }}</td>
+				<td>{{ noun.pl1 }}</td>
+			</tr>
+			<tr>
+				<th>2.</th>
+				<td>{{ noun.sg2 }}</td>
+				<td>{{ noun.pl2 }}</td>
+			</tr>
+			<tr>
+				<th>3.</th>
+				<td>{{ noun.sg3 }}</td>
+				<td>{{ noun.pl3 }}</td>
+			</tr>
+			<tr>
+				<th>4.</th>
+				<td>{{ noun.sg4 }}</td>
+				<td>{{ noun.pl4 }}</td>
+			</tr>
+			<tr>
+				<th>5.</th>
+				<td>{{ noun.sg5 }}</td>
+				<td>{{ noun.pl5 }}</td>
+			</tr>
+			<tr>
+				<th>6.</th>
+				<td>{{ noun.sg6 }}</td>
+				<td>{{ noun.pl6 }}</td>
+			</tr>
+		</table>
+	</div>
+{% endblock %}

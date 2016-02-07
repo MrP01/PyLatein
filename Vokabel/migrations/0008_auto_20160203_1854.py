@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('Vokabel', '0007_auto_20160202_1631'),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Conjugation',
+            fields=[
+                ('id', models.CharField(max_length=5, primary_key=True, serialize=False)),
+                ('description', models.CharField(max_length=100)),
+                ('presentSg1', models.CharField(max_length=12)),
+                ('presentSg2', models.CharField(max_length=12)),
+                ('presentSg3', models.CharField(max_length=12)),
+                ('presentPl1', models.CharField(max_length=12)),
+                ('presentPl2', models.CharField(max_length=12)),
+                ('presentPl3', models.CharField(max_length=12)),
+                ('perfectSg1', models.CharField(max_length=12)),
+                ('perfectSg2', models.CharField(max_length=12)),
+                ('perfectSg3', models.CharField(max_length=12)),
+                ('perfectPl1', models.CharField(max_length=12)),
+                ('perfectPl2', models.CharField(max_length=12)),
+                ('perfectPl3', models.CharField(max_length=12)),
+                ('imperfectSg1', models.CharField(max_length=12)),
+                ('imperfectSg2', models.CharField(max_length=12)),
+                ('imperfectSg3', models.CharField(max_length=12)),
+                ('imperfectPl1', models.CharField(max_length=12)),
+                ('imperfectPl2', models.CharField(max_length=12)),
+                ('imperfectPl3', models.CharField(max_length=12)),
+                ('pluqperfSg1', models.CharField(max_length=12)),
+                ('pluqperfSg2', models.CharField(max_length=12)),
+                ('pluqperfSg3', models.CharField(max_length=12)),
+                ('pluqperfPl1', models.CharField(max_length=12)),
+                ('pluqperfPl2', models.CharField(max_length=12)),
+                ('pluqperfPl3', models.CharField(max_length=12)),
+                ('futureSg1', models.CharField(max_length=12)),
+                ('futureSg2', models.CharField(max_length=12)),
+                ('futureSg3', models.CharField(max_length=12)),
+                ('futurePl1', models.CharField(max_length=12)),
+                ('futurePl2', models.CharField(max_length=12)),
+                ('futurePl3', models.CharField(max_length=12)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Verb',
+            fields=[
+                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('translation', models.CharField(max_length=100)),
+                ('infinitive', models.CharField(max_length=100)),
+                ('imperativeSg', models.CharField(max_length=100)),
+                ('imperativePl', models.CharField(max_length=100)),
+                ('presentSg1', models.CharField(max_length=100)),
+                ('presentSg2', models.CharField(max_length=100)),
+                ('presentSg3', models.CharField(max_length=100)),
+                ('presentPl1', models.CharField(max_length=100)),
+                ('presentPl2', models.CharField(max_length=100)),
+                ('presentPl3', models.CharField(max_length=100)),
+                ('perfectSg1', models.CharField(max_length=100)),
+                ('perfectSg2', models.CharField(max_length=100)),
+                ('perfectSg3', models.CharField(max_length=100)),
+                ('perfectPl1', models.CharField(max_length=100)),
+                ('perfectPl2', models.CharField(max_length=100)),
+                ('perfectPl3', models.CharField(max_length=100)),
+                ('imperfectSg1', models.CharField(max_length=100)),
+                ('imperfectSg2', models.CharField(max_length=100)),
+                ('imperfectSg3', models.CharField(max_length=100)),
+                ('imperfectPl1', models.CharField(max_length=100)),
+                ('imperfectPl2', models.CharField(max_length=100)),
+                ('imperfectPl3', models.CharField(max_length=100)),
+                ('pluqperfSg1', models.CharField(max_length=100)),
+                ('pluqperfSg2', models.CharField(max_length=100)),
+                ('pluqperfSg3', models.CharField(max_length=100)),
+                ('pluqperfPl1', models.CharField(max_length=100)),
+                ('pluqperfPl2', models.CharField(max_length=100)),
+                ('pluqperfPl3', models.CharField(max_length=100)),
+                ('futureSg1', models.CharField(max_length=100)),
+                ('futureSg2', models.CharField(max_length=100)),
+                ('futureSg3', models.CharField(max_length=100)),
+                ('futurePl1', models.CharField(max_length=100)),
+                ('futurePl2', models.CharField(max_length=100)),
+                ('futurePl3', models.CharField(max_length=100)),
+            ],
+        ),
+        migrations.RenameField(
+            model_name='declination',
+            old_name='name',
+            new_name='id',
+        ),
+    ]
