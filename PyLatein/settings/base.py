@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+4)s*f&6z$k$wl)-$u32-zf$e^_6$k+c^=sh&+76ue%)^jliz-'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mrp01.pythonanywhere.com']
 
 
 # Application definition
