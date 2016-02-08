@@ -13,19 +13,32 @@
 				<div class="jumbotron" style="background-color: orange; padding: 10px;">
 					<h3>Fill the table quickly!</h3>
 					<div class="form-group">
+						<label class="control-label" for="declination">Declination</label>
+						<div class=" ">
+							<select class="form-control" id="declination" name="declination" onchange="updateUI()">
+                <option value="1AO">A/O-Declination</option>
+                <option value="3">3. Declination</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="control-label" for="stem">Stem</label>
 						<div class=" ">
 							<input type="text" class="form-control" id="stem" name="stem">
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="control-label" for="declination">Declination</label>
+					<div class="form-group hidden" id="sg1_group">
+						<label class="control-label" for="sg1m">Masculine Sg.</label>
 						<div class=" ">
-							<select class="form-control" id="declination" name="declination">
-								{% for declination in declinations %}
-									<option value="{{ declination.id }}">{{ declination.description }}</option>
-								{% endfor %}
-							</select>
+							<input type="text" class="form-control" id="sg1m" name="sg1m">
+						</div>
+						<label class="control-label" for="sg1f">Feminine Sg.</label>
+						<div class=" ">
+							<input type="text" class="form-control" id="sg1f" name="sg1f">
+						</div>
+						<label class="control-label" for="sg1n">Neuter Sg.</label>
+						<div class=" ">
+							<input type="text" class="form-control" id="sg1n" name="sg1n">
 						</div>
 					</div>
           <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
@@ -44,89 +57,89 @@
                 <table class="table table-bordered">
                   <tr>
                     <th>Sg</th>
-                    <th>Maskulin</th>
-                    <th>Feminin</th>
-                    <th>Neutrum</th>
+                    <th>Masculine</th>
+                    <th>Feminine</th>
+                    <th>Neuter</th>
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.posSg1m|bootstrap_inline }}</td>
-                    <td>{{ form.posSg1f|bootstrap_inline }}</td>
-                    <td>{{ form.posSg1n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg1m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg1f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg1n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.posSg2m|bootstrap_inline }}</td>
-                    <td>{{ form.posSg2f|bootstrap_inline }}</td>
-                    <td>{{ form.posSg2n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg2m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg2f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg2n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.posSg3m|bootstrap_inline }}</td>
-                    <td>{{ form.posSg3f|bootstrap_inline }}</td>
-                    <td>{{ form.posSg3n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg3m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg3f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg3n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>4.</th>
-                    <td>{{ form.posSg4m|bootstrap_inline }}</td>
-                    <td>{{ form.posSg4f|bootstrap_inline }}</td>
-                    <td>{{ form.posSg4n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg4m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg4f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg4n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>5.</th>
-                    <td>{{ form.posSg5m|bootstrap_inline }}</td>
-                    <td>{{ form.posSg5f|bootstrap_inline }}</td>
-                    <td>{{ form.posSg5n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg5m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg5f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg5n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>6.</th>
-                    <td>{{ form.posSg6m|bootstrap_inline }}</td>
-                    <td>{{ form.posSg6f|bootstrap_inline }}</td>
-                    <td>{{ form.posSg6n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg6m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg6f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_sg6n|bootstrap_inline }}</td>
                   </tr>
                 </table>
                 <table class="table table-bordered">
                   <tr>
                     <th>Pl</th>
-                    <th>Maskulin</th>
-                    <th>Feminin</th>
-                    <th>Neutrum</th>
+                    <th>Masculine</th>
+                    <th>Feminine</th>
+                    <th>Neuter</th>
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.posPl1m|bootstrap_inline }}</td>
-                    <td>{{ form.posPl1f|bootstrap_inline }}</td>
-                    <td>{{ form.posPl1n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl1m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl1f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl1n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.posPl2m|bootstrap_inline }}</td>
-                    <td>{{ form.posPl2f|bootstrap_inline }}</td>
-                    <td>{{ form.posPl2n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl2m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl2f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl2n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.posPl3m|bootstrap_inline }}</td>
-                    <td>{{ form.posPl3f|bootstrap_inline }}</td>
-                    <td>{{ form.posPl3n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl3m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl3f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl3n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>4.</th>
-                    <td>{{ form.posPl4m|bootstrap_inline }}</td>
-                    <td>{{ form.posPl4f|bootstrap_inline }}</td>
-                    <td>{{ form.posPl4n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl4m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl4f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl4n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>5.</th>
-                    <td>{{ form.posPl5m|bootstrap_inline }}</td>
-                    <td>{{ form.posPl5f|bootstrap_inline }}</td>
-                    <td>{{ form.posPl5n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl5m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl5f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl5n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>6.</th>
-                    <td>{{ form.posPl6m|bootstrap_inline }}</td>
-                    <td>{{ form.posPl6f|bootstrap_inline }}</td>
-                    <td>{{ form.posPl6n|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl6m|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl6f|bootstrap_inline }}</td>
+                    <td>{{ form.pos_pl6n|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -134,89 +147,89 @@
                 <table class="table table-bordered">
                   <tr>
                     <th>Sg</th>
-                    <th>Maskulin</th>
-                    <th>Feminin</th>
-                    <th>Neutrum</th>
+                    <th>Masculine</th>
+                    <th>Feminine</th>
+                    <th>Neuter</th>
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.compSg1m|bootstrap_inline }}</td>
-                    <td>{{ form.compSg1f|bootstrap_inline }}</td>
-                    <td>{{ form.compSg1n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg1m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg1f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg1n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.compSg2m|bootstrap_inline }}</td>
-                    <td>{{ form.compSg2f|bootstrap_inline }}</td>
-                    <td>{{ form.compSg2n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg2m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg2f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg2n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.compSg3m|bootstrap_inline }}</td>
-                    <td>{{ form.compSg3f|bootstrap_inline }}</td>
-                    <td>{{ form.compSg3n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg3m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg3f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg3n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>4.</th>
-                    <td>{{ form.compSg4m|bootstrap_inline }}</td>
-                    <td>{{ form.compSg4f|bootstrap_inline }}</td>
-                    <td>{{ form.compSg4n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg4m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg4f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg4n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>5.</th>
-                    <td>{{ form.compSg5m|bootstrap_inline }}</td>
-                    <td>{{ form.compSg5f|bootstrap_inline }}</td>
-                    <td>{{ form.compSg5n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg5m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg5f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg5n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>6.</th>
-                    <td>{{ form.compSg6m|bootstrap_inline }}</td>
-                    <td>{{ form.compSg6f|bootstrap_inline }}</td>
-                    <td>{{ form.compSg6n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg6m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg6f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_sg6n|bootstrap_inline }}</td>
                   </tr>
                 </table>
                 <table class="table table-bordered">
                   <tr>
                     <th>Pl</th>
-                    <th>Maskulin</th>
-                    <th>Feminin</th>
-                    <th>Neutrum</th>
+                    <th>Masculine</th>
+                    <th>Feminine</th>
+                    <th>Neuter</th>
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.compPl1m|bootstrap_inline }}</td>
-                    <td>{{ form.compPl1f|bootstrap_inline }}</td>
-                    <td>{{ form.compPl1n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl1m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl1f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl1n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.compPl2m|bootstrap_inline }}</td>
-                    <td>{{ form.compPl2f|bootstrap_inline }}</td>
-                    <td>{{ form.compPl2n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl2m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl2f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl2n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.compPl3m|bootstrap_inline }}</td>
-                    <td>{{ form.compPl3f|bootstrap_inline }}</td>
-                    <td>{{ form.compPl3n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl3m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl3f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl3n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>4.</th>
-                    <td>{{ form.compPl4m|bootstrap_inline }}</td>
-                    <td>{{ form.compPl4f|bootstrap_inline }}</td>
-                    <td>{{ form.compPl4n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl4m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl4f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl4n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>5.</th>
-                    <td>{{ form.compPl5m|bootstrap_inline }}</td>
-                    <td>{{ form.compPl5f|bootstrap_inline }}</td>
-                    <td>{{ form.compPl5n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl5m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl5f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl5n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>6.</th>
-                    <td>{{ form.compPl6m|bootstrap_inline }}</td>
-                    <td>{{ form.compPl6f|bootstrap_inline }}</td>
-                    <td>{{ form.compPl6n|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl6m|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl6f|bootstrap_inline }}</td>
+                    <td>{{ form.comp_pl6n|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -224,89 +237,89 @@
                 <table class="table table-bordered">
                   <tr>
                     <th>Sg</th>
-                    <th>Maskulin</th>
-                    <th>Feminin</th>
-                    <th>Neutrum</th>
+                    <th>Masculine</th>
+                    <th>Feminine</th>
+                    <th>Neuter</th>
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.supSg1m|bootstrap_inline }}</td>
-                    <td>{{ form.supSg1f|bootstrap_inline }}</td>
-                    <td>{{ form.supSg1n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg1m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg1f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg1n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.supSg2m|bootstrap_inline }}</td>
-                    <td>{{ form.supSg2f|bootstrap_inline }}</td>
-                    <td>{{ form.supSg2n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg2m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg2f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg2n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.supSg3m|bootstrap_inline }}</td>
-                    <td>{{ form.supSg3f|bootstrap_inline }}</td>
-                    <td>{{ form.supSg3n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg3m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg3f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg3n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>4.</th>
-                    <td>{{ form.supSg4m|bootstrap_inline }}</td>
-                    <td>{{ form.supSg4f|bootstrap_inline }}</td>
-                    <td>{{ form.supSg4n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg4m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg4f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg4n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>5.</th>
-                    <td>{{ form.supSg5m|bootstrap_inline }}</td>
-                    <td>{{ form.supSg5f|bootstrap_inline }}</td>
-                    <td>{{ form.supSg5n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg5m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg5f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg5n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>6.</th>
-                    <td>{{ form.supSg6m|bootstrap_inline }}</td>
-                    <td>{{ form.supSg6f|bootstrap_inline }}</td>
-                    <td>{{ form.supSg6n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg6m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg6f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_sg6n|bootstrap_inline }}</td>
                   </tr>
                 </table>
                 <table class="table table-bordered">
                   <tr>
                     <th>Pl</th>
-                    <th>Maskulin</th>
-                    <th>Feminin</th>
-                    <th>Neutrum</th>
+                    <th>Masculine</th>
+                    <th>Feminine</th>
+                    <th>Neuter</th>
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.supPl1m|bootstrap_inline }}</td>
-                    <td>{{ form.supPl1f|bootstrap_inline }}</td>
-                    <td>{{ form.supPl1n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl1m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl1f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl1n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.supPl2m|bootstrap_inline }}</td>
-                    <td>{{ form.supPl2f|bootstrap_inline }}</td>
-                    <td>{{ form.supPl2n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl2m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl2f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl2n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.supPl3m|bootstrap_inline }}</td>
-                    <td>{{ form.supPl3f|bootstrap_inline }}</td>
-                    <td>{{ form.supPl3n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl3m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl3f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl3n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>4.</th>
-                    <td>{{ form.supPl4m|bootstrap_inline }}</td>
-                    <td>{{ form.supPl4f|bootstrap_inline }}</td>
-                    <td>{{ form.supPl4n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl4m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl4f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl4n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>5.</th>
-                    <td>{{ form.supPl5m|bootstrap_inline }}</td>
-                    <td>{{ form.supPl5f|bootstrap_inline }}</td>
-                    <td>{{ form.supPl5n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl5m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl5f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl5n|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>6.</th>
-                    <td>{{ form.supPl6m|bootstrap_inline }}</td>
-                    <td>{{ form.supPl6f|bootstrap_inline }}</td>
-                    <td>{{ form.supPl6n|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl6m|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl6f|bootstrap_inline }}</td>
+                    <td>{{ form.sup_pl6n|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -323,11 +336,45 @@
 
 {% block scripts %}
   {% load staticfiles %}
-  <script src="{% static 'js/grammar/base.js' %}"></script>
-  <script src="{% static 'js/grammar/adjective.js' %}"></script>
+  <script src="{% static 'js/grammar/decline.js' %}"></script>
 	<script>
-		$(document).ready(function(){
-      window.declinations=loadJSON('{{ declinations_json|escapejs }}')
-		});
+  function fill_form(){
+    var stem=$("#stem").val();
+    var positive=decline_adjective($("#sg1m").val(), $("#sg1f").val(), $("#sg1n").val(),
+        stem, $("#declination").val());
+    for (var i = 0; i < cases.length; i++){
+      $("#id_pos_"+cases[i]+"m").val(positive.m[cases[i]]);}
+    for (var i = 0; i < cases.length; i++){
+      $("#id_pos_"+cases[i]+"f").val(positive.f[cases[i]]);}
+    for (var i = 0; i < cases.length; i++){
+      $("#id_pos_"+cases[i]+"n").val(positive.n[cases[i]]);}
+    
+    var comp=comparative(stem);
+    for (var i = 0; i < cases.length; i++){
+      $("#id_comp_"+cases[i]+"m").val(comp.m[cases[i]]);}
+    for (var i = 0; i < cases.length; i++){
+      $("#id_comp_"+cases[i]+"f").val(comp.f[cases[i]]);}
+    for (var i = 0; i < cases.length; i++){
+      $("#id_comp_"+cases[i]+"n").val(comp.n[cases[i]]);}
+    
+    var sup=superlative(stem);
+    for (var i = 0; i < cases.length; i++){
+      $("#id_sup_"+cases[i]+"m").val(sup.m[cases[i]]);}
+    for (var i = 0; i < cases.length; i++){
+      $("#id_sup_"+cases[i]+"f").val(sup.f[cases[i]]);}
+    for (var i = 0; i < cases.length; i++){
+      $("#id_sup_"+cases[i]+"n").val(sup.n[cases[i]]);}
+  }
+  function updateUI(){
+    if ($("#declination").val() == "3"){
+      $("#sg1_group").removeClass("hidden");
+    }
+    else{
+      $("#sg1_group").addClass("hidden");
+    }
+  }
+  $(document).ready(function(){
+    updateUI();
+  });
 	</script>
 {% endblock %} scripts %}

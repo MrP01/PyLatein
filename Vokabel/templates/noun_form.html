@@ -3,7 +3,6 @@
 {% block head %}
 	<title>Create Noun - PyLatein</title>
 	{% load bootstrap %}
-{#	<script src="{% static 'js/declination.js' %}"></script>#}
 {% endblock %}
 
 {% block body %}
@@ -17,13 +16,13 @@
 						<label class="control-label" for="declination">Declination</label>
 						<div class=" ">
 							<select class="form-control" id="declination" name="declination" onchange="updateUI()">
-                <option value="1A">A-Deklination</option>
-                <option value="1O">O-Deklination</option>
-                <option value="3K">3. Deklination Konsonantenstämme</option>
-                <option value="3M">3. Deklination Mischstämme</option>
-                <option value="3I">3. Deklination I-Stämme</option>
-                <option value="5E">E-Deklination</option>
-                <option value="5U">U-Deklination</option>
+                <option value="1A">A-Declination</option>
+                <option value="1O">O-Declination</option>
+                <option value="3K">3. Declination Consonant Stems</option>
+                <option value="3M">3. Declination Mixed Stems</option>
+                <option value="3I">3. Declination I-Stems</option>
+                <option value="5E">E-Declination</option>
+                <option value="5U">U-Declination</option>
 							</select>
 						</div>
 					</div>
@@ -36,7 +35,7 @@
 					<div class="form-group hidden" id="sg1_group">
 						<label class="control-label" for="sg1">Nominative Sg.</label>
 						<div class=" ">
-							<input type="text" class="form-control" id="sg1" name="stem">
+							<input type="text" class="form-control" id="sg1" name="sg1">
 						</div>
 					</div>
           <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>

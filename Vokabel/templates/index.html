@@ -16,7 +16,7 @@
 					</tr>
 					{% for noun in nouns %}
 						<tr>
-							<td><a href="{% url 'show_noun' noun.id %}">{{ noun.sg1 }}, {{ noun.sg2 }} [{{ noun.genus }}]</a></td>
+							<td><a href="{% url 'view_noun' noun.id %}">{{ noun.sg1 }}, {{ noun.sg2 }} [{{ noun.genus }}]</a></td>
 							<td>{{ noun.translation }}</td>
 						</tr>
 					{% endfor %}
@@ -24,18 +24,34 @@
 			</div>
 			<div class="col-lg-4 col-md-6 col-sm-12" align="center">
 				<h1 class="page-header">All Verbs</h1>
-				<table id="table_nomina" class="table table-hover">
+				<table id="table_verbs" class="table table-hover">
 					<tr>
 						<th>Latin</th>
 						<th>Translation</th>
 					</tr>
 					{% for verb in verbs %}
 						<tr>
-							<td><a href="{% url 'show_verb' verb.id %}">{{ verb.presentSg1 }}, {{ verb.presentSg2 }}, {{ verb.infinitive }}</a></td>
+							<td><a href="{% url 'view_verb' verb.id %}">{{ verb.presentSg1 }}, {{ verb.presentSg2 }}, {{ verb.infinitive }}</a></td>
 							<td>{{ verb.translation }}</td>
 						</tr>
 					{% endfor %}
 				</table>
+      </div>
+			<div class="col-lg-4 col-md-6 col-sm-12" align="center">
+				<h1 class="page-header">All Adjectives</h1>
+				<table id="table_adjectives" class="table table-hover">
+					<tr>
+						<th>Latin</th>
+						<th>Translation</th>
+					</tr>
+					{% for adjective in adjectives %}
+						<tr>
+							<td><a href="{% url 'view_adjective' adjective.id %}">{{ adjective.pos_sg1m }}/{{ adjective.pos_sg1f }}/{{ adjective.pos_sg1n }}</a></td>
+							<td>{{ adjective.translation }}</td>
+						</tr>
+					{% endfor %}
+				</table>
+      </div>
 		</div>
 	</div>
 {% endblock %}

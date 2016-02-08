@@ -19,9 +19,9 @@ import Vokabel.views
 # app_name="vokabel"
 urlpatterns = [
     url(r'createNoun$', Vokabel.views.CreateNoun.as_view(), name="create_noun"),
-    url(r'noun(?P<pk>[0-9]+)$', Vokabel.views.NounDetail.as_view(), name="show_noun"),
+    url(r'noun(?P<pk>[0-9]+)$', Vokabel.views.NounDetail.as_view(), name="view_noun"),
     url(r'createVerb$', Vokabel.views.CreateVerb.as_view(), name="create_verb"),
-    url(r'verb(?P<pk>[0-9]+)$', Vokabel.views.VerbDetail.as_view(), name="show_verb"),
+    url(r'verb(?P<pk>[0-9]+)$', Vokabel.views.VerbDetail.as_view(), name="view_verb"),
     url(r'createAdjective$', Vokabel.views.CreateAdjective.as_view(), name="create_adjective"),
-    # url(r'adjective(?P<pk>[0-9]+)$', Vokabel.views.DetailAdjective.as_view(), name="show_adjective"),
+    url(r'adjective(?P<pk>[0-9]+)$', Vokabel.views.AdjectiveDetail.as_view(), name="view_adjective"),
 ]

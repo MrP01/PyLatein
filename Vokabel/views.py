@@ -20,6 +20,7 @@ class AllVoc(MultipleModelsListView):
 	querysets = {
 		"nouns": Noun.objects.all,
 		"verbs": Verb.objects.all,
+		"adjectives": Adjective.objects.all
 	}
 
 class CreateNoun(generic.CreateView):
@@ -59,9 +60,6 @@ class CreateAdjective(generic.CreateView):
 	form_class = AdjectiveForm
 	success_url = "/"
 
-	def get_context_data(self, **kwargs):
-		ctx=super(CreateAdjective, self).get_context_data(**kwargs)
-		declinations=Declination.objects.all()
-		ctx["declinations"]=declinations
-		ctx["declinations_json"]=serializers.serialize("json", declinations)
-		return ctx
+class AdjectiveDetail(generic.DetailView):
+	template_name = "adjective_detail.html"
+	model = Adjective
