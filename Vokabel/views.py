@@ -23,6 +23,8 @@ class AllVoc(MultipleModelsListView):
 		"adjectives": Adjective.objects.all
 	}
 
+# class SearchView(generic.View):
+
 class CreateNoun(generic.CreateView):
 	template_name = "noun_form.html"
 	form_class = NounForm

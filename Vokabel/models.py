@@ -24,6 +24,7 @@ class Vocable(models.Model):
 	class Meta:
 		abstract=True
 
+
 #################################
 #Noun
 
@@ -97,23 +98,6 @@ class Verb(Vocable):
 	future2_pl1=models.CharField(max_length=100)
 	future2_pl2=models.CharField(max_length=100)
 	future2_pl3=models.CharField(max_length=100)
-
-class Conjugation(models.Model):
-	id=models.CharField(max_length=5, primary_key=True)
-	description=models.CharField(max_length=100)
-	vocal=models.CharField(max_length=1)
-
-class VerbEndings(models.Model):
-	"""Contains 3 singular and 3 plural endings for a verb"""
-	id=models.CharField(max_length=5, primary_key=True)
-	description=models.CharField(max_length=100)
-
-	sg1=models.CharField(max_length=12)
-	sg2=models.CharField(max_length=12)
-	sg3=models.CharField(max_length=12)
-	pl1=models.CharField(max_length=12)
-	pl2=models.CharField(max_length=12)
-	pl3=models.CharField(max_length=12)
 
 
 #################################
