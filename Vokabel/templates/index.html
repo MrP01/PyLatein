@@ -31,7 +31,7 @@
 					</tr>
 					{% for verb in verbs %}
 						<tr>
-							<td><a href="{% url 'view_verb' verb.id %}">{{ verb.presentSg1 }}, {{ verb.presentSg2 }}, {{ verb.infinitive }}</a></td>
+							<td><a href="{% url 'view_verb' verb.id %}">{{ verb.present_sg1 }}, {{ verb.present_sg2 }}, {{ verb.infinitive }}, {{ verb.perfect_sg1 }}</a></td>
 							<td>{{ verb.translation }}</td>
 						</tr>
 					{% endfor %}

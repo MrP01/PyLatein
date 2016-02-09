@@ -14,10 +14,12 @@
 					<div class="form-group">
 						<label class="control-label" for="conjugation">Conjugation</label>
 						<div class=" ">
-							<select class="form-control" id="conjugation" onchange="conjugation_changed()">
-                {% for conjugation in conjugations %}
-                  <option value="{{ conjugation.id }}">{{ conjugation.description }}</option>
-                {% endfor %}
+							<select class="form-control" id="conjugation" onchange="updateUI()">
+                <option value="A">A-Conjugation</option>
+                <option value="E">E-Conjugation</option>
+                <option value="C">Consonant Conjugation</option>
+                <option value="I">I-Conjugation</option>
+                <option value="M">Mixed Conjugation</option>
 							</select>
 						</div>
 					</div>
@@ -42,8 +44,8 @@
         <form role="form" method="post" action="{% url 'create_verb' %}">
           {% csrf_token %}
           {{ form.infinitive|bootstrap }}
-          {{ form.imperativeSg|bootstrap }}
-          {{ form.imperativePl|bootstrap }}
+          {{ form.imperative_sg|bootstrap }}
+          {{ form.imperative_pl|bootstrap }}
           {{ form.translation|bootstrap }}
           <!-- Use nav-pills, nav-tabs. To center tabs add nav-justified to the class for ul -->
           <ul class="nav nav-pills">
@@ -65,18 +67,18 @@
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.presentSg1|bootstrap_inline }}</td>
-                    <td>{{ form.presentPl1|bootstrap_inline }}</td>
+                    <td>{{ form.present_sg1|bootstrap_inline }}</td>
+                    <td>{{ form.present_pl1|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.presentSg2|bootstrap_inline }}</td>
-                    <td>{{ form.presentPl2|bootstrap_inline }}</td>
+                    <td>{{ form.present_sg2|bootstrap_inline }}</td>
+                    <td>{{ form.present_pl2|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.presentSg3|bootstrap_inline }}</td>
-                    <td>{{ form.presentPl3|bootstrap_inline }}</td>
+                    <td>{{ form.present_sg3|bootstrap_inline }}</td>
+                    <td>{{ form.present_pl3|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -91,18 +93,18 @@
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.perfectSg1|bootstrap_inline }}</td>
-                    <td>{{ form.perfectPl1|bootstrap_inline }}</td>
+                    <td>{{ form.perfect_sg1|bootstrap_inline }}</td>
+                    <td>{{ form.perfect_pl1|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.perfectSg2|bootstrap_inline }}</td>
-                    <td>{{ form.perfectPl2|bootstrap_inline }}</td>
+                    <td>{{ form.perfect_sg2|bootstrap_inline }}</td>
+                    <td>{{ form.perfect_pl2|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.perfectSg3|bootstrap_inline }}</td>
-                    <td>{{ form.perfectPl3|bootstrap_inline }}</td>
+                    <td>{{ form.perfect_sg3|bootstrap_inline }}</td>
+                    <td>{{ form.perfect_pl3|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -117,18 +119,18 @@
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.imperfectSg1|bootstrap_inline }}</td>
-                    <td>{{ form.imperfectPl1|bootstrap_inline }}</td>
+                    <td>{{ form.imperfect_sg1|bootstrap_inline }}</td>
+                    <td>{{ form.imperfect_pl1|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.imperfectSg2|bootstrap_inline }}</td>
-                    <td>{{ form.imperfectPl2|bootstrap_inline }}</td>
+                    <td>{{ form.imperfect_sg2|bootstrap_inline }}</td>
+                    <td>{{ form.imperfect_pl2|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.imperfectSg3|bootstrap_inline }}</td>
-                    <td>{{ form.imperfectPl3|bootstrap_inline }}</td>
+                    <td>{{ form.imperfect_sg3|bootstrap_inline }}</td>
+                    <td>{{ form.imperfect_pl3|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -143,18 +145,18 @@
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.pluqperfectSg1|bootstrap_inline }}</td>
-                    <td>{{ form.pluqperfectPl1|bootstrap_inline }}</td>
+                    <td>{{ form.pluqperfect_sg1|bootstrap_inline }}</td>
+                    <td>{{ form.pluqperfect_pl1|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.pluqperfectSg2|bootstrap_inline }}</td>
-                    <td>{{ form.pluqperfectPl2|bootstrap_inline }}</td>
+                    <td>{{ form.pluqperfect_sg2|bootstrap_inline }}</td>
+                    <td>{{ form.pluqperfect_pl2|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.pluqperfectSg3|bootstrap_inline }}</td>
-                    <td>{{ form.pluqperfectPl3|bootstrap_inline }}</td>
+                    <td>{{ form.pluqperfect_sg3|bootstrap_inline }}</td>
+                    <td>{{ form.pluqperfect_pl3|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -169,18 +171,18 @@
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.futureSg1|bootstrap_inline }}</td>
-                    <td>{{ form.futurePl1|bootstrap_inline }}</td>
+                    <td>{{ form.future_sg1|bootstrap_inline }}</td>
+                    <td>{{ form.future_pl1|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.futureSg2|bootstrap_inline }}</td>
-                    <td>{{ form.futurePl2|bootstrap_inline }}</td>
+                    <td>{{ form.future_sg2|bootstrap_inline }}</td>
+                    <td>{{ form.future_pl2|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.futureSg3|bootstrap_inline }}</td>
-                    <td>{{ form.futurePl3|bootstrap_inline }}</td>
+                    <td>{{ form.future_sg3|bootstrap_inline }}</td>
+                    <td>{{ form.future_pl3|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -195,18 +197,18 @@
                   </tr>
                   <tr>
                     <th>1.</th>
-                    <td>{{ form.future2Sg1|bootstrap_inline }}</td>
-                    <td>{{ form.future2Pl1|bootstrap_inline }}</td>
+                    <td>{{ form.future2_sg1|bootstrap_inline }}</td>
+                    <td>{{ form.future2_pl1|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>2.</th>
-                    <td>{{ form.future2Sg2|bootstrap_inline }}</td>
-                    <td>{{ form.future2Pl2|bootstrap_inline }}</td>
+                    <td>{{ form.future2_sg2|bootstrap_inline }}</td>
+                    <td>{{ form.future2_pl2|bootstrap_inline }}</td>
                   </tr>
                   <tr>
                     <th>3.</th>
-                    <td>{{ form.future2Sg3|bootstrap_inline }}</td>
-                    <td>{{ form.future2Pl3|bootstrap_inline }}</td>
+                    <td>{{ form.future2_sg3|bootstrap_inline }}</td>
+                    <td>{{ form.future2_pl3|bootstrap_inline }}</td>
                   </tr>
                 </table>
               </div>
@@ -223,16 +225,21 @@
 
 {% block scripts %}
   {% load staticfiles %}
-  <script src="{% static 'js/grammar/base.js' %}"></script>
-  <script src="{% static 'js/grammar/verb.js' %}"></script>
+  <script src="{% static 'js/grammar/conjugate.js' %}"></script>
 	<script>
+    function fill_form(){
+      var result=conjugate($("#present_stem").val(), $("#perfect_stem").val(), $("#conjugation").val());
+      $("#id_present_sg1").val(result.present_sg1);
+      Object.keys(result).forEach(function (key){
+        $("#id_"+key).val(result[key]);
+      })
+    }
 		$(document).ready(function(){
-      window.endings = loadJSON('{{ endings_json|escapejs }}');
-      conjugation_changed();
+      updateUI()
 		});
-    function conjugation_changed(){
+    function updateUI(){
       var conjugation=$("#conjugation").val();
-      if ((conjugation == "K") || (conjugation == "M")){$("#perfect_stem_group").removeClass("hidden");}
+      if ((conjugation == "C") || (conjugation == "M")){$("#perfect_stem_group").removeClass("hidden");}
       else{$("#perfect_stem_group").addClass("hidden");}
     }
 	</script>

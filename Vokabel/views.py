@@ -28,13 +28,6 @@ class CreateNoun(generic.CreateView):
 	form_class = NounForm
 	success_url = "/"
 
-	# def get_context_data(self, **kwargs):
-	# 	ctx=super(CreateNoun, self).get_context_data(**kwargs)
-	# 	declinations=Declination.objects.all()
-	# 	ctx["declinations"]=declinations
-	# 	ctx["declinations_json"]=serializers.serialize("json", declinations)
-	# 	return ctx
-
 class NounDetail(generic.DetailView):
 	template_name = "noun_detail.html"
 	model = Noun
@@ -43,13 +36,6 @@ class CreateVerb(generic.CreateView):
 	template_name = "verb_form.html"
 	form_class = VerbForm
 	success_url = "/"
-
-	def get_context_data(self, **kwargs):
-		ctx=super(CreateVerb, self).get_context_data(**kwargs)
-		conjugations=Conjugation.objects.all()
-		ctx["conjugations"]=conjugations
-		ctx["endings_json"]=serializers.serialize("json", VerbEndings.objects.all())
-		return ctx
 
 class VerbDetail(generic.DetailView):
 	template_name = "verb_detail.html"
