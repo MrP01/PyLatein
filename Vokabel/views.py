@@ -1,7 +1,16 @@
+from django.core.urlresolvers import reverse
+from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.views import generic
-from django.core import serializers
 
 from .forms import *
+
+def searchAllFields(model, query):
+	expr=Q()
+	for field in model._meta.get_fields():
+		expr=expr|Q(**{field.name+"__icontains":query})
+	return model.objects.filter(expr)
 
 class MultipleModelsListView(generic.View, generic.base.TemplateResponseMixin, generic.base.ContextMixin):
 	querysets={}    #context_object_name:getter method
@@ -23,7 +32,13 @@ class AllVoc(MultipleModelsListView):
 		"adjectives": Adjective.objects.all
 	}
 
-# class SearchView(generic.View):
+class SearchView(generic.View):
+	def get(self, request, *args, **kwargs):
+		query=request.GET["query"]
+		return render(request, "searchresults.html",
+		    context={"nouns": searchAllFields(Noun, query),
+		        "verbs": searchAllFields(Verb, query),
+		        "adjectives": searchAllFields(Adjective, query)})
 
 class CreateNoun(generic.CreateView):
 	template_name = "noun_form.html"

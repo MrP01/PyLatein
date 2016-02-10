@@ -13,11 +13,12 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.conf.urls import url
 import Vokabel.views
 
 # app_name="vokabel"
 urlpatterns = [
+    url(r'search', Vokabel.views.SearchView.as_view(), name="search"),
     url(r'createNoun$', Vokabel.views.CreateNoun.as_view(), name="create_noun"),
     url(r'noun(?P<pk>[0-9]+)$', Vokabel.views.NounDetail.as_view(), name="view_noun"),
     url(r'createVerb$', Vokabel.views.CreateVerb.as_view(), name="create_verb"),
