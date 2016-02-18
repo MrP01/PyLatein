@@ -67,6 +67,7 @@ function conjugate(present_stem, perfect_stem, conjugation){
     //imperfect
     var impfVocal="e";
     if (conjugation == "A"){impfVocal="a";}
+    else if (conjugation == "I" || conjugation == "M"){impfVocal="ie";}
     assignEndings(result, "imperfect_", present_stem, impfVocal+"ba", endings.impf);
 
     //plusquamperfect
