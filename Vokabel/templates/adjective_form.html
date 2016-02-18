@@ -12,34 +12,50 @@
         <h1 class="page-header">Create a new Adjective!</h1>
 				<div class="jumbotron" style="background-color: orange; padding: 10px;">
 					<h3>Fill the table quickly!</h3>
+
 					<div class="form-group">
 						<label class="control-label" for="declination">Declination</label>
-						<div class=" ">
-							<select class="form-control" id="declination" name="declination" onchange="updateUI()">
-                <option value="1AO">A/O-Declination</option>
-                <option value="3">3. Declination</option>
-							</select>
-						</div>
+            <select class="form-control" id="declination" name="declination" onchange="updateUI()">
+              <option value="1AO">A/O-Declination</option>
+              <option value="3">3. Declination</option>
+            </select>
 					</div>
+
 					<div class="form-group">
 						<label class="control-label" for="stem">Stem</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="stem" name="stem">
-						</div>
+            <input type="text" class="form-control" id="stem" name="stem">
 					</div>
+
 					<div class="form-group hidden" id="sg1_group">
 						<label class="control-label" for="sg1m">Masculine Sg.</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="sg1m" name="sg1m">
-						</div>
+            <input type="text" class="form-control" id="sg1m" name="sg1m">
 						<label class="control-label" for="sg1f">Feminine Sg.</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="sg1f" name="sg1f">
-						</div>
+            <input type="text" class="form-control" id="sg1f" name="sg1f">
 						<label class="control-label" for="sg1n">Neuter Sg.</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="sg1n" name="sg1n">
-						</div>
+            <input type="text" class="form-control" id="sg1n" name="sg1n">
+					</div>
+
+          <div class="form-group">
+            <input id="irreg_comp_stem" type="checkbox" aria-label="..." onchange="updateUI()">
+            <label for="irreg_comp_stem">Irregular comparative stem?</label>
+          </div>
+          <div class="form-group hidden" id="comp_stem_group">
+						<label class="control-label" for="comp_stem">Comparative stem</label>
+            <input type="text" class="form-control" id="comp_stem" name="comp_stem">
+          </div>
+
+          <div class="form-group">
+            <input id="irreg_super_stem" type="checkbox" aria-label="..." onchange="updateUI()">
+            <label for="irreg_super_stem">Irregular (non-issim) superlative stem?</label>
+          </div>
+          <div class="form-group hidden" id="super_stem_group">
+						<label class="control-label" for="super_stem">Superlative stem</label>
+            <input type="text" class="form-control" id="super_stem" name="super_stem">
+          </div>
+
+					<div class="form-group hidden" id="sg1_group">
+						<label class="control-label" for="sg1m">Masculine Sg.</label>
+            <input type="text" class="form-control" id="sg1m" name="sg1m">
 					</div>
           <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
 				</div>
@@ -47,7 +63,7 @@
 					<form role="form" method="post" action="{% url 'create_adjective' %}">
 						{% csrf_token %}
 						{{ form.translation|bootstrap }}
-            <ul class="nav nav-pills">
+            <ul class="nav nav-tabs nav-justified">
               <li class="active"><a data-toggle="tab" href="#positive">Positive</a></li>
               <li><a data-toggle="tab" href="#comparative">Comparative</a></li>
               <li><a data-toggle="tab" href="#superlative">Superlative</a></li>
@@ -348,16 +364,24 @@
       $("#id_pos_"+cases[i]+"f").val(positive.f[cases[i]]);}
     for (var i = 0; i < cases.length; i++){
       $("#id_pos_"+cases[i]+"n").val(positive.n[cases[i]]);}
-    
-    var comp=comparative(stem);
+
+    var comp;
+    if ($("#irreg_comp_stem").is(":checked")){
+      comp=comparative($("#comp_stem").val());}
+    else{
+      comp=comparative(stem);}
     for (var i = 0; i < cases.length; i++){
       $("#id_comp_"+cases[i]+"m").val(comp.m[cases[i]]);}
     for (var i = 0; i < cases.length; i++){
       $("#id_comp_"+cases[i]+"f").val(comp.f[cases[i]]);}
     for (var i = 0; i < cases.length; i++){
       $("#id_comp_"+cases[i]+"n").val(comp.n[cases[i]]);}
-    
-    var sup=superlative(stem);
+
+    var sup;
+    if ($("#irreg_super_stem").is(":checked")){
+      sup=superlative($("#super_stem").val(), false);}
+    else{
+      sup=superlative(stem, true);}
     for (var i = 0; i < cases.length; i++){
       $("#id_sup_"+cases[i]+"m").val(sup.m[cases[i]]);}
     for (var i = 0; i < cases.length; i++){
@@ -366,15 +390,23 @@
       $("#id_sup_"+cases[i]+"n").val(sup.n[cases[i]]);}
   }
   function updateUI(){
-    if ($("#declination").val() == "3"){
-      $("#sg1_group").removeClass("hidden");
-    }
+    if ($("#irreg_super_stem").is(":checked")){
+      $("#super_stem_group").removeClass("hidden");}
     else{
-      $("#sg1_group").addClass("hidden");
-    }
+      $("#super_stem_group").addClass("hidden");}
+
+    if ($("#irreg_comp_stem").is(":checked")){
+      $("#comp_stem_group").removeClass("hidden");}
+    else{
+      $("#comp_stem_group").addClass("hidden");}
+
+    if ($("#declination").val() == "3"){
+      $("#sg1_group").removeClass("hidden");}
+    else{
+      $("#sg1_group").addClass("hidden");}
   }
   $(document).ready(function(){
     updateUI();
   });
 	</script>
-{% endblock %} scripts %}
+{% endblock %}

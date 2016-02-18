@@ -34,10 +34,13 @@ function decline(sg1, stem, genus, declination){
     for (var i = 0; i < cases.length; i++){
         result[cases[i]]=stem+dec[cases[i]]}
 
-    if (["3C", "3M", "3I"].indexOf(declination) > -1){
-        result.sg1=sg1;}
-    else if (declination == "1O" && genus == "n"){
-        result.sg1=stem+"um";}
+    if (sg1 != "__auto__"){
+        if (["3C", "3M", "3I"].indexOf(declination) > -1){
+            result.sg1=sg1;
+        }
+        else if (declination == "1O" && genus == "n"){
+            result.sg1=stem+"um";}
+    }
 
     if (genus == "n"){
         result.sg4=result.sg1;
@@ -82,12 +85,14 @@ function comparative(stem){
     return result;
 }
 
-function superlative(stem){
+function superlative(stem, auto){
     var result={};
-    var newstem=stem+"issim";
-    result.m=decline("", newstem, "m", "1O");
-    result.f=decline("", newstem, "f", "1A");
-    result.n=decline("", newstem, "n", "1O");
+    if (auto){
+        stem=stem+"issim";
+    }
+    result.m=decline("", stem, "m", "1O");
+    result.f=decline("", stem, "f", "1A");
+    result.n=decline("", stem, "n", "1O");
     return result;
 }
 

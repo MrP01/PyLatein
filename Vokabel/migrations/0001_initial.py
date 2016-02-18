@@ -11,10 +11,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Nomen',
+            name="Nomen",
             fields=[
-                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
-                ('geschlecht', models.CharField(choices=[('m', 'maskulin'), ('f', 'feminin'), ('n', 'neutrum')], max_length=1)),
+                ("id", models.AutoField(verbose_name="ID", primary_key=True, auto_created=True, serialize=False)),
+                ("geschlecht", models.CharField(choices=[("m", "maskulin"), ("f", "feminin"), ("n", "neutrum")], max_length=1)),
             ],
         ),
     ]

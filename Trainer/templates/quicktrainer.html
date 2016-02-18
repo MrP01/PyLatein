@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+	<title>Trainer - PyLatein</title>
+  {% load tools %}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+        {% for voc in vocs %}
+          {% if voc|isinst:"Vokabel.models.Noun" %}
+            <p>here goes noun {{ voc.sg1 }}</p>
+          {% endif %}
+          {% if voc|isinst:"Vokabel.models.Verb" %}
+            <p>here goes verb {{ voc.infinitive }}</p>
+          {% endif %}
+          {% if voc|isinst:"Vokabel.models.Adjective" %}
+            <p>here goes adjective {{ voc.pos_sg1m }}</p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+	</div>
+{% endblock %}

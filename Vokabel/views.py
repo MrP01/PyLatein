@@ -1,6 +1,4 @@
-from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 
@@ -14,7 +12,7 @@ def searchAllFields(model, query):
 
 class MultipleModelsListView(generic.View, generic.base.TemplateResponseMixin, generic.base.ContextMixin):
 	querysets={}    #context_object_name:getter method
-	def get(self, request, *args, **kwargs):
+	def get(self, request, **kwargs):
 		ctx=self.get_context_data(**kwargs)
 		return self.render_to_response(ctx)
 

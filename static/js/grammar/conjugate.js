@@ -29,12 +29,14 @@ function conjugate(present_stem, perfect_stem, conjugation){
     else{vocal="i"}
 
     //perfect_stem
-    if (conjugation == "A"){
-        perfect_stem=present_stem+"av";}
-    else if (conjugation == "E"){
-        perfect_stem=present_stem+"u";}
-    else if (conjugation == "I"){
-        perfect_stem=present_stem+"iv";}
+    if (perfect_stem == "__auto__"){
+        if (conjugation == "A"){
+            perfect_stem=present_stem+"av";}
+        else if (conjugation == "E"){
+            perfect_stem=present_stem+"u";}
+        else if (conjugation == "I"){
+            perfect_stem=present_stem+"iv";}
+    }
 
     //infinitive and imperatives
     if (conjugation == "C" || conjugation == "M"){

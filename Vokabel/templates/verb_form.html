@@ -13,27 +13,25 @@
 					<h3>Fill it quickly!</h3>
 					<div class="form-group">
 						<label class="control-label" for="conjugation">Conjugation</label>
-						<div class=" ">
-							<select class="form-control" id="conjugation" onchange="updateUI()">
-                <option value="A">A-Conjugation</option>
-                <option value="E">E-Conjugation</option>
-                <option value="C">Consonant Conjugation</option>
-                <option value="I">I-Conjugation</option>
-                <option value="M">Mixed Conjugation</option>
-							</select>
-						</div>
+            <select class="form-control" id="conjugation" onchange="update_auto_checkbox()">
+              <option value="A">A-Conjugation</option>
+              <option value="E">E-Conjugation</option>
+              <option value="C">Consonant Conjugation</option>
+              <option value="I">I-Conjugation</option>
+              <option value="M">Mixed Conjugation</option>
+            </select>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="present_stem">Present Stem</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="present_stem">
-						</div>
+            <input type="text" class="form-control" id="present_stem">
 					</div>
+          <div class="form-group">
+            <input id="auto_perfect_stem" type="checkbox" aria-label="..." onchange="updateUI()">
+            <label for="auto_perfect_stem">Auto Perfect stem?</label>
+          </div>
 					<div class="form-group hidden" id="perfect_stem_group">
 						<label class="control-label" for="perfect_stem">Perfect Stem</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="perfect_stem">
-						</div>
+            <input type="text" class="form-control" id="perfect_stem">
 					</div>
           <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
 				</div>
@@ -48,7 +46,7 @@
           {{ form.imperative_pl|bootstrap }}
           {{ form.translation|bootstrap }}
           <!-- Use nav-pills, nav-tabs. To center tabs add nav-justified to the class for ul -->
-          <ul class="nav nav-pills">
+          <ul class="nav nav-tabs nav-justified">
             <li class="active"><a data-toggle="tab" href="#present">Present</a></li>
             <li><a data-toggle="tab" href="#perfect">Perfect</a></li>
             <li><a data-toggle="tab" href="#imperfect">Imperfect</a></li>
@@ -216,19 +214,33 @@
   <script src="{% static 'js/grammar/conjugate.js' %}"></script>
 	<script>
     function fill_form(){
-      var result=conjugate($("#present_stem").val(), $("#perfect_stem").val(), $("#conjugation").val());
-      $("#id_present_sg1").val(result.present_sg1);
+      var perfect_stem=$("#perfect_stem").val();
+      if ($("#auto_perfect_stem").is(":checked")){
+        perfect_stem="__auto__";
+      }
+      var result=conjugate($("#present_stem").val(), perfect_stem, $("#conjugation").val());
       Object.keys(result).forEach(function (key){
         $("#id_"+key).val(result[key]);
       })
     }
-		$(document).ready(function(){
-      updateUI()
-		});
-    function updateUI(){
+    function update_auto_checkbox(){
       var conjugation=$("#conjugation").val();
-      if ((conjugation == "C") || (conjugation == "M")){$("#perfect_stem_group").removeClass("hidden");}
-      else{$("#perfect_stem_group").addClass("hidden");}
+      if ((conjugation == "C") || (conjugation == "M")){
+        $("#auto_perfect_stem").prop("checked", false);}
+      else{
+        $("#auto_perfect_stem").prop("checked", true);}
+      updateUI()
     }
+    function updateUI(){
+      if ($("#auto_perfect_stem").is(":checked")){
+        $("#perfect_stem_group").addClass("hidden");
+      }
+      else{
+        $("#perfect_stem_group").removeClass("hidden");}
+    }
+		$(document).ready(function(){
+      update_auto_checkbox();
+      updateUI();
+		});
 	</script>
 {% endblock %} scripts %}

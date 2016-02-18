@@ -14,30 +14,28 @@
 					<h3>Fill the table quickly!</h3>
 					<div class="form-group">
 						<label class="control-label" for="declination">Declination</label>
-						<div class=" ">
-							<select class="form-control" id="declination" name="declination" onchange="updateUI()">
-                <option value="1A">A-Declination</option>
-                <option value="1O">O-Declination</option>
-                <option value="3C">3. Declination Consonant Stems</option>
-                <option value="3M">3. Declination Mixed Stems</option>
-                <option value="3I">3. Declination I-Stems</option>
-                <option value="5E">E-Declination</option>
-                <option value="5U">U-Declination</option>
-							</select>
-						</div>
+            <select class="form-control" id="declination" name="declination" onchange="update_auto_checkbox()">
+              <option value="1A">A-Declination</option>
+              <option value="1O">O-Declination</option>
+              <option value="3C">3. Declination Consonant Stems</option>
+              <option value="3M">3. Declination Mixed Stems</option>
+              <option value="3I">3. Declination I-Stems</option>
+              <option value="5E">E-Declination</option>
+              <option value="5U">U-Declination</option>
+            </select>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="stem">Stem</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="stem" name="stem">
-						</div>
+            <input type="text" class="form-control" id="stem" name="stem">
 					</div>
-					<div class="form-group hidden" id="sg1_group">
-						<label class="control-label" for="sg1">Nominative Sg.</label>
-						<div class=" ">
-							<input type="text" class="form-control" id="sg1" name="sg1">
-						</div>
-					</div>
+          <div class="form-group">
+            <input id="auto_sg1" type="checkbox" aria-label="..." onchange="updateUI()">
+            <label for="auto_sg1">Auto 1. Case Sg.?</label>
+          </div>
+          <div class="form-group hidden" id="sg1_group">
+            <label class="control-label" for="sg1">Nominative Sg.</label>
+            <input type="text" class="form-control" id="sg1" name="sg1">
+          </div>
           <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
 				</div>
 				<div class="jumbotron" style="padding: 10px;">
@@ -95,23 +93,35 @@
 {% block scripts %}
   {% load staticfiles %}
   <script src="{% static 'js/grammar/decline.js' %}"></script>
+{#  <script src="/static/js/grammar/decline.js"></script>#}
 	<script>
   function fill_form(){
-    var result=decline($("#sg1").val(), $("#stem").val(),
+    var sg1=$("#sg1").val();
+    if ($("#auto_sg1").is(":checked")){
+      sg1="__auto__";
+    }
+    var result=decline(sg1, $("#stem").val(),
         $("#id_genus").val(), $("#declination").val());
     for (var i = 0; i < cases.length; i++){
       $("#id_"+cases[i]).val(result[cases[i]]);
     }
   }
-  function updateUI(){
+  function update_auto_checkbox(){
     if (["3C", "3M", "3I"].indexOf($("#declination").val()) > -1){
-      $("#sg1_group").removeClass("hidden");
-    }
+      $("#auto_sg1").prop("checked", false);}
     else{
+      $("#auto_sg1").prop("checked", true);}
+    updateUI();
+  }
+  function updateUI(){
+    if ($("#auto_sg1").is(":checked")){
       $("#sg1_group").addClass("hidden");
     }
+    else{
+      $("#sg1_group").removeClass("hidden");}
   }
   $(document).ready(function(){
+    update_auto_checkbox();
     updateUI();
   });
 	</script>
