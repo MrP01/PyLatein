@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, fields
 from django.shortcuts import render
 from django.views import generic
 
@@ -7,7 +7,10 @@ from .forms import *
 def searchAllFields(model, query):
 	expr=Q()
 	for field in model._meta.get_fields():
-		expr=expr|Q(**{field.name+"__icontains":query})
+		if (field.name == "vocgroup"):
+			expr=expr|Q(vocgroup__name__icontains=query)
+		else:
+			expr=expr|Q(**{field.name+"__icontains":query})
 	return model.objects.filter(expr)
 
 class MultipleModelsListView(generic.View, generic.base.TemplateResponseMixin, generic.base.ContextMixin):

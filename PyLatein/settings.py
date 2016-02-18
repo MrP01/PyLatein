@@ -24,7 +24,7 @@ SECRET_KEY = "+4)s*f&6z$k$wl)-$u32-zf$e^_6$k+c^=sh&+76ue%)^jliz-"
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "mrp01.pythonanywhere.com"]
 
-# SECURITY WARNING: don"t run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 

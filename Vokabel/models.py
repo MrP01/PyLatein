@@ -44,6 +44,9 @@ class Noun(Vocable):
 	pl5=models.CharField(max_length=128)
 	pl6=models.CharField(max_length=128)
 
+	def __str__(self):
+		return "{sg1}, {sg2} [{genus}]".format(sg1=self.sg1, sg2=self.sg2, genus=self.genus)
+
 class Verb(Vocable):
 	infinitive=models.CharField(max_length=128)
 	imperative_sg=models.CharField(max_length=128)
@@ -90,6 +93,10 @@ class Verb(Vocable):
 	future2_pl1=models.CharField(max_length=128)
 	future2_pl2=models.CharField(max_length=128)
 	future2_pl3=models.CharField(max_length=128)
+
+	def __str__(self):
+		return "{pr1}, {pr2}, {inf}, {perf}".format(pr1=self.present_sg1, pr2=self.present_sg2,
+		                                            inf=self.infinitive, perf=self.perfect_sg1)
 
 class Adjective(Vocable):
 	pos_sg1m=models.CharField(max_length=128)
@@ -202,6 +209,9 @@ class Adjective(Vocable):
 	sup_pl4n=models.CharField(max_length=128)
 	sup_pl5n=models.CharField(max_length=128)
 	sup_pl6n=models.CharField(max_length=128)
+
+	def __str__(self):
+		return "{m}/{f}/{n}".format(m=self.pos_sg1m, f=self.pos_sg1f, n=self.pos_sg1n)
 
 
 class VocGroup(models.Model):
