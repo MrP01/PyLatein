@@ -2,25 +2,50 @@
 
 {% block head %}
 	<title>Trainer - PyLatein</title>
-  {% load tools %}
 {% endblock %}
 
 {% block body %}
 	<div class="container">
     <div class="row">
       <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-        {% for voc in vocs %}
-          {% if voc|isinst:"Vokabel.models.Noun" %}
-            <p>here goes noun {{ voc.sg1 }}</p>
-          {% endif %}
-          {% if voc|isinst:"Vokabel.models.Verb" %}
-            <p>here goes verb {{ voc.infinitive }}</p>
-          {% endif %}
-          {% if voc|isinst:"Vokabel.models.Adjective" %}
-            <p>here goes adjective {{ voc.pos_sg1m }}</p>
-          {% endif %}
-        {% endfor %}
+        <h4 id="prompt">Prompt</h4>
+        <label class="control-label">Translation</label>
+        <input id="input" class="form-control" type="text" placeholder="Enter translation here" onchange="trainer.check()">
+        <div id="my_alert" class="alert alert-success">Start!</div>
       </div>
     </div>
 	</div>
+{% endblock %}
+
+{% block scripts %}
+  {% load staticfiles %}
+  <script src="{% static 'trainer/base.js' %}"></script>
+  <script src="{% static 'trainer/translation.js' %}"></script>
+  <script>
+    $(document).ready(function(){
+      trainer = new TranslationTrainer("#input", "#prompt", {{ vocs|safe }});
+
+      trainer.message = function(msg, timeout){
+        var alert=$("#my_alert");
+        if (msg == "correct"){
+          alert.removeClass("alert-danger").addClass("alert-success");
+          alert.html("Correct!");
+          alert.slideDown(400);
+        }
+        else if (msg == "wrong"){
+          alert.removeClass("alert-success").addClass("alert-danger");
+          alert.html("Sorry, but that was wrong");
+          alert.slideDown(400);
+        }
+        if (timeout){
+          setTimeout(function(){trainer.clearMsg()}, timeout);
+        }
+      };
+      trainer.clearMsg = function(){
+        $("#my_alert").slideUp(500);
+      };
+
+      trainer.start();
+    });
+  </script>
 {% endblock %}
