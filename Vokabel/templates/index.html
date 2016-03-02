@@ -1,57 +1,54 @@
 {% extends 'layout.html' %}
 
 {% block head %}
+  {{ super() }}
 	<title>PyLatein - Latein-Trainer</title>
 {% endblock %}
 
-{% block body %}
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-4 col-md-6 col-sm-12">
-				<h1 class="page-header">All Nouns</h1>
-				<table id="table_nomina" class="table table-striped table-hover">
-					<tr>
-						<th>Latin</th>
-						<th>Translation</th>
-					</tr>
-					{% for noun in nouns %}
-						<tr>
-							<td><a href="{% url 'view_noun' noun.id %}">{{ noun }}</a></td>
-							<td>{{ noun.translation }}</td>
-						</tr>
-					{% endfor %}
-				</table>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-12">
-				<h1 class="page-header">All Verbs</h1>
-				<table id="table_verbs" class="table table-striped table-hover">
-					<tr>
-						<th>Latin</th>
-						<th>Translation</th>
-					</tr>
-					{% for verb in verbs %}
-						<tr>
-							<td><a href="{% url 'view_verb' verb.id %}">{{ verb }}</a></td>
-							<td>{{ verb.translation }}</td>
-						</tr>
-					{% endfor %}
-				</table>
-      </div>
-			<div class="col-lg-4 col-md-6 col-sm-12">
-				<h1 class="page-header">All Adjectives</h1>
-				<table id="table_adjectives" class="table table-striped table-hover">
-					<tr>
-						<th>Latin</th>
-						<th>Translation</th>
-					</tr>
-					{% for adjective in adjectives %}
-						<tr>
-							<td><a href="{% url 'view_adjective' adjective.id %}">{{ adjective }}</a></td>
-							<td>{{ adjective.translation }}</td>
-						</tr>
-					{% endfor %}
-				</table>
-      </div>
-		</div>
-	</div>
+{% block cols %}
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h1 class="page-header">All Nouns</h1>
+    <table id="table_nomina" class="table table-striped table-hover">
+      <tr>
+        <th>Latin</th>
+        <th>Translation</th>
+      </tr>
+      {% for noun in nouns %}
+        <tr>
+          <td><a href="{{ url('view_noun', pk=noun.id) }}">{{ noun }}</a></td>
+          <td>{{ noun.translation }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h1 class="page-header">All Verbs</h1>
+    <table id="table_verbs" class="table table-striped table-hover">
+      <tr>
+        <th>Latin</th>
+        <th>Translation</th>
+      </tr>
+      {% for verb in verbs %}
+        <tr>
+          <td><a href="{{ url('view_verb', pk=verb.id) }}">{{ verb }}</a></td>
+          <td>{{ verb.translation }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h1 class="page-header">All Adjectives</h1>
+    <table id="table_adjectives" class="table table-striped table-hover">
+      <tr>
+        <th>Latin</th>
+        <th>Translation</th>
+      </tr>
+      {% for adjective in adjectives %}
+        <tr>
+          <td><a href="{{ url('view_verb', pk=adjective.id) }}">{{ adjective }}</a></td>
+          <td>{{ adjective.translation }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 {% endblock %}

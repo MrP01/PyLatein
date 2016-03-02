@@ -1,245 +1,220 @@
-{% extends 'layout.html' %}
+{% extends 'form.html' %}
 
 {% block head %}
+  {{ super() }}
 	<title>Create Verb - PyLatein</title>
-	{% load bootstrap %}
 {% endblock %}
 
-{% block body %}
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-				<div class="jumbotron" style="background-color: orange; padding: 10px;">
-					<h3>Fill it quickly!</h3>
-					<div class="form-group">
-						<label class="control-label" for="conjugation">Conjugation</label>
-            <select class="form-control" id="conjugation" onchange="update_auto_checkbox()">
-              <option value="A">A-Conjugation</option>
-              <option value="E">E-Conjugation</option>
-              <option value="C">Consonant Conjugation</option>
-              <option value="I">I-Conjugation</option>
-              <option value="M">Mixed Conjugation</option>
-            </select>
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="present_stem">Present Stem</label>
-            <input type="text" class="form-control" id="present_stem">
-					</div>
-          <div class="form-group">
-            <input id="auto_perfect_stem" type="checkbox" aria-label="..." onchange="updateUI()">
-            <label for="auto_perfect_stem">Auto Perfect stem?</label>
-          </div>
-					<div class="form-group hidden" id="perfect_stem_group">
-						<label class="control-label" for="perfect_stem">Perfect Stem</label>
-            <input type="text" class="form-control" id="perfect_stem">
-					</div>
-          <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
-				</div>
-      </div>
+{% block header %}Create a new Verb!{% endblock %}
+{% block form_url %}{{ request.path }}{% endblock %}
+
+{% block helpers %}
+  {{ form.conjugation|bootstrap }}
+  <div class="form-group">
+    <label class="control-label" for="present_stem">Present Stem</label>
+    <input type="text" class="form-control" id="present_stem">
+  </div>
+  <div class="form-group">
+    <input id="auto_perfect_stem" type="checkbox" aria-label="..." onclick="$('#perfect_stem_group').slideToggle()">
+    <label for="auto_perfect_stem">Auto Perfect stem?</label>
+  </div>
+  <div class="form-group" id="perfect_stem_group">
+    <label class="control-label" for="perfect_stem">Perfect Stem</label>
+    <input type="text" class="form-control" id="perfect_stem">
+  </div>
+  <button type="button" class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
+{% endblock %}
+
+{% block form %}
+  {{ form.infinitive|bootstrap }}
+  {{ form.imperative_sg|bootstrap }}
+  {{ form.imperative_pl|bootstrap }}
+  {{ form.translation|bootstrap }}
+  <!-- Use nav-pills, nav-tabs. To center tabs add nav-justified to the class for ul -->
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="tab" href="#present">Present</a></li>
+    <li><a data-toggle="tab" href="#perfect">Perfect</a></li>
+    <li><a data-toggle="tab" href="#imperfect">Imperfect</a></li>
+    <li><a data-toggle="tab" href="#pluqperfect">Plusquamperfect</a></li>
+    <li><a data-toggle="tab" href="#future">Future</a></li>
+    <li><a data-toggle="tab" href="#future2">Future II</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="present" class="tab-pane fade in active">
+      <table class="table table-bordered">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.present_sg1|bootstrap_inline }}</td>
+          <td>{{ form.present_pl1|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.present_sg2|bootstrap_inline }}</td>
+          <td>{{ form.present_pl2|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.present_sg3|bootstrap_inline }}</td>
+          <td>{{ form.present_pl3|bootstrap_inline }}</td>
+        </tr>
+      </table>
     </div>
-    <div class="row">
-      <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-        <form role="form" method="post" action="{% url 'create_verb' %}">
-          {% csrf_token %}
-          {{ form.infinitive|bootstrap }}
-          {{ form.imperative_sg|bootstrap }}
-          {{ form.imperative_pl|bootstrap }}
-          {{ form.translation|bootstrap }}
-          <!-- Use nav-pills, nav-tabs. To center tabs add nav-justified to the class for ul -->
-          <ul class="nav nav-tabs nav-justified">
-            <li class="active"><a data-toggle="tab" href="#present">Present</a></li>
-            <li><a data-toggle="tab" href="#perfect">Perfect</a></li>
-            <li><a data-toggle="tab" href="#imperfect">Imperfect</a></li>
-            <li><a data-toggle="tab" href="#pluqperfect">Plusquamperfect</a></li>
-            <li><a data-toggle="tab" href="#future">Future</a></li>
-            <li><a data-toggle="tab" href="#future2">Future II</a></li>
-          </ul>
-          <div class="tab-content">
-            <div id="present" class="tab-pane fade in active">
-              <table class="table table-bordered">
-                <tr>
-                  <th></th>
-                  <th>Singular</th>
-                  <th>Plural</th>
-                </tr>
-                <tr>
-                  <th>1.</th>
-                  <td>{{ form.present_sg1|bootstrap_inline }}</td>
-                  <td>{{ form.present_pl1|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>2.</th>
-                  <td>{{ form.present_sg2|bootstrap_inline }}</td>
-                  <td>{{ form.present_pl2|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>3.</th>
-                  <td>{{ form.present_sg3|bootstrap_inline }}</td>
-                  <td>{{ form.present_pl3|bootstrap_inline }}</td>
-                </tr>
-              </table>
-            </div>
-            <div id="perfect" class="tab-pane fade">
-              <table class="table table-bordered">
-                <tr>
-                  <th></th>
-                  <th>Singular</th>
-                  <th>Plural</th>
-                </tr>
-                <tr>
-                  <th>1.</th>
-                  <td>{{ form.perfect_sg1|bootstrap_inline }}</td>
-                  <td>{{ form.perfect_pl1|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>2.</th>
-                  <td>{{ form.perfect_sg2|bootstrap_inline }}</td>
-                  <td>{{ form.perfect_pl2|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>3.</th>
-                  <td>{{ form.perfect_sg3|bootstrap_inline }}</td>
-                  <td>{{ form.perfect_pl3|bootstrap_inline }}</td>
-                </tr>
-              </table>
-            </div>
-            <div id="imperfect" class="tab-pane fade">
-              <table class="table table-bordered">
-                <tr>
-                  <th></th>
-                  <th>Singular</th>
-                  <th>Plural</th>
-                </tr>
-                <tr>
-                  <th>1.</th>
-                  <td>{{ form.imperfect_sg1|bootstrap_inline }}</td>
-                  <td>{{ form.imperfect_pl1|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>2.</th>
-                  <td>{{ form.imperfect_sg2|bootstrap_inline }}</td>
-                  <td>{{ form.imperfect_pl2|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>3.</th>
-                  <td>{{ form.imperfect_sg3|bootstrap_inline }}</td>
-                  <td>{{ form.imperfect_pl3|bootstrap_inline }}</td>
-                </tr>
-              </table>
-            </div>
-            <div id="pluqperfect" class="tab-pane fade">
-              <table class="table table-bordered">
-                <tr>
-                  <th></th>
-                  <th>Singular</th>
-                  <th>Plural</th>
-                </tr>
-                <tr>
-                  <th>1.</th>
-                  <td>{{ form.pluqperfect_sg1|bootstrap_inline }}</td>
-                  <td>{{ form.pluqperfect_pl1|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>2.</th>
-                  <td>{{ form.pluqperfect_sg2|bootstrap_inline }}</td>
-                  <td>{{ form.pluqperfect_pl2|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>3.</th>
-                  <td>{{ form.pluqperfect_sg3|bootstrap_inline }}</td>
-                  <td>{{ form.pluqperfect_pl3|bootstrap_inline }}</td>
-                </tr>
-              </table>
-            </div>
-            <div id="future" class="tab-pane fade">
-              <table class="table table-bordered">
-                <tr>
-                  <th></th>
-                  <th>Singular</th>
-                  <th>Plural</th>
-                </tr>
-                <tr>
-                  <th>1.</th>
-                  <td>{{ form.future_sg1|bootstrap_inline }}</td>
-                  <td>{{ form.future_pl1|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>2.</th>
-                  <td>{{ form.future_sg2|bootstrap_inline }}</td>
-                  <td>{{ form.future_pl2|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>3.</th>
-                  <td>{{ form.future_sg3|bootstrap_inline }}</td>
-                  <td>{{ form.future_pl3|bootstrap_inline }}</td>
-                </tr>
-              </table>
-            </div>
-            <div id="future2" class="tab-pane fade">
-              <table class="table table-bordered">
-                <tr>
-                  <th></th>
-                  <th>Singular</th>
-                  <th>Plural</th>
-                </tr>
-                <tr>
-                  <th>1.</th>
-                  <td>{{ form.future2_sg1|bootstrap_inline }}</td>
-                  <td>{{ form.future2_pl1|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>2.</th>
-                  <td>{{ form.future2_sg2|bootstrap_inline }}</td>
-                  <td>{{ form.future2_pl2|bootstrap_inline }}</td>
-                </tr>
-                <tr>
-                  <th>3.</th>
-                  <td>{{ form.future2_sg3|bootstrap_inline }}</td>
-                  <td>{{ form.future2_pl3|bootstrap_inline }}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
+    <div id="perfect" class="tab-pane fade">
+      <table class="table table-bordered">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.perfect_sg1|bootstrap_inline }}</td>
+          <td>{{ form.perfect_pl1|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.perfect_sg2|bootstrap_inline }}</td>
+          <td>{{ form.perfect_pl2|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.perfect_sg3|bootstrap_inline }}</td>
+          <td>{{ form.perfect_pl3|bootstrap_inline }}</td>
+        </tr>
+      </table>
     </div>
-	</div>
+    <div id="imperfect" class="tab-pane fade">
+      <table class="table table-bordered">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.imperfect_sg1|bootstrap_inline }}</td>
+          <td>{{ form.imperfect_pl1|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.imperfect_sg2|bootstrap_inline }}</td>
+          <td>{{ form.imperfect_pl2|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.imperfect_sg3|bootstrap_inline }}</td>
+          <td>{{ form.imperfect_pl3|bootstrap_inline }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="pluqperfect" class="tab-pane fade">
+      <table class="table table-bordered">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.pluqperfect_sg1|bootstrap_inline }}</td>
+          <td>{{ form.pluqperfect_pl1|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.pluqperfect_sg2|bootstrap_inline }}</td>
+          <td>{{ form.pluqperfect_pl2|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.pluqperfect_sg3|bootstrap_inline }}</td>
+          <td>{{ form.pluqperfect_pl3|bootstrap_inline }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="future" class="tab-pane fade">
+      <table class="table table-bordered">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.future_sg1|bootstrap_inline }}</td>
+          <td>{{ form.future_pl1|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.future_sg2|bootstrap_inline }}</td>
+          <td>{{ form.future_pl2|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.future_sg3|bootstrap_inline }}</td>
+          <td>{{ form.future_pl3|bootstrap_inline }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="future2" class="tab-pane fade">
+      <table class="table table-bordered">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.future2_sg1|bootstrap_inline }}</td>
+          <td>{{ form.future2_pl1|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.future2_sg2|bootstrap_inline }}</td>
+          <td>{{ form.future2_pl2|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.future2_sg3|bootstrap_inline }}</td>
+          <td>{{ form.future2_pl3|bootstrap_inline }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 {% endblock %}
 
 {% block scripts %}
-  {% load staticfiles %}
-  <script src="{% static 'js/grammar/conjugate.js' %}"></script>
+  {{ super() }}
+  <script src="{{ static('js/grammar/conjugate.js') }}"></script>
 	<script>
     function fill_form(){
       var perfect_stem=$("#perfect_stem").val();
       if ($("#auto_perfect_stem").is(":checked")){
         perfect_stem="__auto__";
       }
-      var result=conjugate($("#present_stem").val(), perfect_stem, $("#conjugation").val());
+      var result=conjugate($("#present_stem").val(), perfect_stem, $("#id_conjugation").val());
       Object.keys(result).forEach(function (key){
         $("#id_"+key).val(result[key]);
       })
     }
-    function update_auto_checkbox(){
-      var conjugation=$("#conjugation").val();
-      if ((conjugation == "C") || (conjugation == "M")){
-        $("#auto_perfect_stem").prop("checked", false);}
-      else{
-        $("#auto_perfect_stem").prop("checked", true);}
-      updateUI()
-    }
     function updateUI(){
-      if ($("#auto_perfect_stem").is(":checked")){
-        $("#perfect_stem_group").addClass("hidden");
+      var conjugation=$("#id_conjugation").val();
+      if ((conjugation == "C") || (conjugation == "M")){
+        $("#auto_perfect_stem").prop("checked", false);
+        $("#perfect_stem_group").slideDown();
       }
       else{
-        $("#perfect_stem_group").removeClass("hidden");}
+        $("#auto_perfect_stem").prop("checked", true);
+        $("#perfect_stem_group").slideUp();
+      }
     }
 		$(document).ready(function(){
-      update_auto_checkbox();
+      $("#perfect_stem_group").slideUp(0);
+      $("#id_conjugation").on("change", updateUI);
       updateUI();
 		});
 	</script>

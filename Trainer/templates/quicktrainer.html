@@ -4,25 +4,20 @@
 	<title>Trainer - PyLatein</title>
 {% endblock %}
 
-{% block body %}
-	<div class="container">
-    <div class="row">
-      <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-        <h4 id="prompt">Prompt</h4>
-        <label class="control-label">Translation</label>
-        <input id="input" class="form-control" type="text" placeholder="Enter translation here" onchange="trainer.check()">
-        <div id="my_alert" class="alert alert-success">Start!</div>
-      </div>
-    </div>
-	</div>
+{% block content %}
+  <h4 id="prompt">Prompt</h4>
+  <label class="control-label">Translation</label>
+  <input id="input" class="form-control" type="text" placeholder="Enter translation here" onchange="trainer.check()">
+  <div id="my_alert" class="alert alert-success">Start!</div>
 {% endblock %}
 
 {% block scripts %}
   {% load staticfiles %}
-  <script src="{% static 'trainer/base.js' %}"></script>
-  <script src="{% static 'trainer/translation.js' %}"></script>
+  <script src="{{ static('trainer/base.js') }}"></script>
+  <script src="{{ static('trainer/translation.js') }}"></script>
   <script>
     $(document).ready(function(){
+      $("#my_alert").slideUp(0);
       trainer = new TranslationTrainer("#input", "#prompt", {{ vocs|safe }});
 
       trainer.message = function(msg, timeout){

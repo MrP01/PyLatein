@@ -25,4 +25,5 @@ urlpatterns = [
     url(r"verb(?P<pk>[0-9]+)$", Vokabel.views.VerbDetail.as_view(), name="view_verb"),
     url(r"createAdjective$", Vokabel.views.CreateAdjective.as_view(), name="create_adjective"),
     url(r"adjective(?P<pk>[0-9]+)$", Vokabel.views.AdjectiveDetail.as_view(), name="view_adjective"),
+    url(r"createVocGr$", Vokabel.views.CreateVocGroup.as_view(), name="create_vocgroup"),
 ]

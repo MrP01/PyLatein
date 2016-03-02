@@ -1,168 +1,166 @@
 {% extends 'layout.html' %}
 
 {% block head %}
+  {{ super() }}
 	<title>View Verb - PyLatein</title>
-	{% load bootstrap %}
 {% endblock %}
 
-{% block body %}
-	<div class="col-lg-4 col-lg-offset-4 col-md-10 col-md-offset-2 col-sm-12">
-		<h3>{{ verb.infinitive }}</h3>
-		<p>{{ verb.translation }}</p>
-		<p>{{ verb.imperative_sg }} / {{ verb.imperative_pl }}</p>
-    <ul class="nav nav-tabs nav-justified">
-      <li class="active"><a data-toggle="tab" href="#present">Present</a></li>
-      <li><a data-toggle="tab" href="#perfect">Perfect</a></li>
-      <li><a data-toggle="tab" href="#imperfect">Imperfect</a></li>
-      <li><a data-toggle="tab" href="#pluqperfect">Plusquamperfect</a></li>
-      <li><a data-toggle="tab" href="#future">Future</a></li>
-      <li><a data-toggle="tab" href="#future2">Future II</a></li>
-    </ul>
-    <div class="tab-content">
-      <div id="present" class="tab-pane fade in active">
-        <table class="table table-striped table-hover">
-          <tr>
-            <th></th>
-            <th>Singular</th>
-            <th>Plural</th>
-          </tr>
-          <tr>
-            <th>1.</th>
-            <td>{{ verb.present_sg1 }}</td>
-            <td>{{ verb.present_pl1 }}</td>
-          </tr>
-          <tr>
-            <th>2.</th>
-            <td>{{ verb.present_sg2 }}</td>
-            <td>{{ verb.present_pl2 }}</td>
-          </tr>
-          <tr>
-            <th>3.</th>
-            <td>{{ verb.present_sg3 }}</td>
-            <td>{{ verb.present_pl3 }}</td>
-          </tr>
-        </table>
-      </div>
-      <div id="perfect" class="tab-pane fade">
-        <table class="table table-striped table-hover">
-          <tr>
-            <th></th>
-            <th>Singular</th>
-            <th>Plural</th>
-          </tr>
-          <tr>
-            <th>1.</th>
-            <td>{{ verb.perfect_sg1 }}</td>
-            <td>{{ verb.perfect_pl1 }}</td>
-          </tr>
-          <tr>
-            <th>2.</th>
-            <td>{{ verb.perfect_sg2 }}</td>
-            <td>{{ verb.perfect_pl2 }}</td>
-          </tr>
-          <tr>
-            <th>3.</th>
-            <td>{{ verb.perfect_sg3 }}</td>
-            <td>{{ verb.perfect_pl3 }}</td>
-          </tr>
-        </table>
-      </div>
-      <div id="imperfect" class="tab-pane fade">
-        <table class="table table-striped table-hover">
-          <tr>
-            <th></th>
-            <th>Singular</th>
-            <th>Plural</th>
-          </tr>
-          <tr>
-            <th>1.</th>
-            <td>{{ verb.imperfect_sg1 }}</td>
-            <td>{{ verb.imperfect_pl1 }}</td>
-          </tr>
-          <tr>
-            <th>2.</th>
-            <td>{{ verb.imperfect_sg2 }}</td>
-            <td>{{ verb.imperfect_pl2 }}</td>
-          </tr>
-          <tr>
-            <th>3.</th>
-            <td>{{ verb.imperfect_sg3 }}</td>
-            <td>{{ verb.imperfect_pl3 }}</td>
-          </tr>
-        </table>
-      </div>
-      <div id="pluqperfect" class="tab-pane fade">
-        <table class="table table-striped table-hover">
-          <tr>
-            <th></th>
-            <th>Singular</th>
-            <th>Plural</th>
-          </tr>
-          <tr>
-            <th>1.</th>
-            <td>{{ verb.pluqperfect_sg1 }}</td>
-            <td>{{ verb.pluqperfect_pl1 }}</td>
-          </tr>
-          <tr>
-            <th>2.</th>
-            <td>{{ verb.pluqperfect_sg2 }}</td>
-            <td>{{ verb.pluqperfect_pl2 }}</td>
-          </tr>
-          <tr>
-            <th>3.</th>
-            <td>{{ verb.pluqperfect_sg3 }}</td>
-            <td>{{ verb.pluqperfect_pl3 }}</td>
-          </tr>
-        </table>
-      </div>
-      <div id="future" class="tab-pane fade">
-        <table class="table table-striped table-hover">
-          <tr>
-            <th></th>
-            <th>Singular</th>
-            <th>Plural</th>
-          </tr>
-          <tr>
-            <th>1.</th>
-            <td>{{ verb.future_sg1 }}</td>
-            <td>{{ verb.future_pl1 }}</td>
-          </tr>
-          <tr>
-            <th>2.</th>
-            <td>{{ verb.future_sg2 }}</td>
-            <td>{{ verb.future_pl2 }}</td>
-          </tr>
-          <tr>
-            <th>3.</th>
-            <td>{{ verb.future_sg3 }}</td>
-            <td>{{ verb.future_pl3 }}</td>
-          </tr>
-        </table>
-      </div>
-      <div id="future2" class="tab-pane fade">
-        <table class="table table-striped table-hover">
-          <tr>
-            <th></th>
-            <th>Singular</th>
-            <th>Plural</th>
-          </tr>
-          <tr>
-            <th>1.</th>
-            <td>{{ verb.future2_sg1 }}</td>
-            <td>{{ verb.future2_pl1 }}</td>
-          </tr>
-          <tr>
-            <th>2.</th>
-            <td>{{ verb.future2_sg2 }}</td>
-            <td>{{ verb.future2_pl2 }}</td>
-          </tr>
-          <tr>
-            <th>3.</th>
-            <td>{{ verb.future2_sg3 }}</td>
-            <td>{{ verb.future2_pl3 }}</td>
-          </tr>
-        </table>
-      </div>
+{% block content %}
+  <h3>{{ verb.infinitive }}</h3>
+  <p>{{ verb.translation }}</p>
+  <p>{{ verb.imperative_sg }} / {{ verb.imperative_pl }}</p>
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="tab" href="#present">Present</a></li>
+    <li><a data-toggle="tab" href="#perfect">Perfect</a></li>
+    <li><a data-toggle="tab" href="#imperfect">Imperfect</a></li>
+    <li><a data-toggle="tab" href="#pluqperfect">Plusquamperfect</a></li>
+    <li><a data-toggle="tab" href="#future">Future</a></li>
+    <li><a data-toggle="tab" href="#future2">Future II</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="present" class="tab-pane fade in active">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ verb.present_sg1 }}</td>
+          <td>{{ verb.present_pl1 }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ verb.present_sg2 }}</td>
+          <td>{{ verb.present_pl2 }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ verb.present_sg3 }}</td>
+          <td>{{ verb.present_pl3 }}</td>
+        </tr>
+      </table>
     </div>
-	</div>
+    <div id="perfect" class="tab-pane fade">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ verb.perfect_sg1 }}</td>
+          <td>{{ verb.perfect_pl1 }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ verb.perfect_sg2 }}</td>
+          <td>{{ verb.perfect_pl2 }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ verb.perfect_sg3 }}</td>
+          <td>{{ verb.perfect_pl3 }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="imperfect" class="tab-pane fade">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ verb.imperfect_sg1 }}</td>
+          <td>{{ verb.imperfect_pl1 }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ verb.imperfect_sg2 }}</td>
+          <td>{{ verb.imperfect_pl2 }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ verb.imperfect_sg3 }}</td>
+          <td>{{ verb.imperfect_pl3 }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="pluqperfect" class="tab-pane fade">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ verb.pluqperfect_sg1 }}</td>
+          <td>{{ verb.pluqperfect_pl1 }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ verb.pluqperfect_sg2 }}</td>
+          <td>{{ verb.pluqperfect_pl2 }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ verb.pluqperfect_sg3 }}</td>
+          <td>{{ verb.pluqperfect_pl3 }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="future" class="tab-pane fade">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ verb.future_sg1 }}</td>
+          <td>{{ verb.future_pl1 }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ verb.future_sg2 }}</td>
+          <td>{{ verb.future_pl2 }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ verb.future_sg3 }}</td>
+          <td>{{ verb.future_pl3 }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="future2" class="tab-pane fade">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th></th>
+          <th>Singular</th>
+          <th>Plural</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ verb.future2_sg1 }}</td>
+          <td>{{ verb.future2_pl1 }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ verb.future2_sg2 }}</td>
+          <td>{{ verb.future2_pl2 }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ verb.future2_sg3 }}</td>
+          <td>{{ verb.future2_pl3 }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 {% endblock %}

@@ -1,368 +1,342 @@
-{% extends 'layout.html' %}
+{% extends 'form.html' %}
 
 {% block head %}
+  {{ super() }}
 	<title>Create Adjective - PyLatein</title>
-	{% load bootstrap %}
 {% endblock %}
 
-{% block body %}
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-        <h1 class="page-header">Create a new Adjective!</h1>
-				<div class="jumbotron" style="background-color: orange; padding: 10px;">
-					<h3>Fill the table quickly!</h3>
+{% block header %}Create a new Adjective!{% endblock %}
+{% block form_url %}{{ request.path }}{% endblock %}
 
-					<div class="form-group">
-						<label class="control-label" for="declination">Declination</label>
-            <select class="form-control" id="declination" name="declination" onchange="updateUI()">
-              <option value="1AO">A/O-Declination</option>
-              <option value="3">3. Declination</option>
-            </select>
-					</div>
+{% block helpers %}
+  {{ form.declination|bootstrap }}
+  <div class="form-group">
+    <label class="control-label" for="stem">Stem</label>
+    <input type="text" class="form-control" id="stem" name="stem">
+  </div>
+  <div class="form-group" id="sg1_group">
+    <label class="control-label" for="sg1m">Masculine Sg.</label>
+    <input type="text" class="form-control" id="sg1m" name="sg1m">
+    <label class="control-label" for="sg1f">Feminine Sg.</label>
+    <input type="text" class="form-control" id="sg1f" name="sg1f">
+    <label class="control-label" for="sg1n">Neuter Sg.</label>
+    <input type="text" class="form-control" id="sg1n" name="sg1n">
+  </div>
+  <div class="form-group">
+    <input id="irreg_comp_stem" type="checkbox" aria-label="..." onclick="$('#comp_stem_group').slideToggle()">
+    <label for="irreg_comp_stem">Irregular comparative stem?</label>
+  </div>
+  <div class="form-group" id="comp_stem_group">
+    <label class="control-label" for="comp_stem">Comparative stem</label>
+    <input type="text" class="form-control" id="comp_stem" name="comp_stem">
+  </div>
+  <div class="form-group">
+    <input id="irreg_super_stem" type="checkbox" aria-label="..." onclick="$('#super_stem_group').slideToggle()">
+    <label for="irreg_super_stem">Irregular (non-issim) superlative stem?</label>
+  </div>
+  <div class="form-group" id="super_stem_group">
+    <label class="control-label" for="super_stem">Superlative stem</label>
+    <input type="text" class="form-control" id="super_stem" name="super_stem">
+  </div>
+  <button type="button" class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
+{% endblock %}
 
-					<div class="form-group">
-						<label class="control-label" for="stem">Stem</label>
-            <input type="text" class="form-control" id="stem" name="stem">
-					</div>
-
-					<div class="form-group hidden" id="sg1_group">
-						<label class="control-label" for="sg1m">Masculine Sg.</label>
-            <input type="text" class="form-control" id="sg1m" name="sg1m">
-						<label class="control-label" for="sg1f">Feminine Sg.</label>
-            <input type="text" class="form-control" id="sg1f" name="sg1f">
-						<label class="control-label" for="sg1n">Neuter Sg.</label>
-            <input type="text" class="form-control" id="sg1n" name="sg1n">
-					</div>
-
-          <div class="form-group">
-            <input id="irreg_comp_stem" type="checkbox" aria-label="..." onchange="updateUI()">
-            <label for="irreg_comp_stem">Irregular comparative stem?</label>
-          </div>
-          <div class="form-group hidden" id="comp_stem_group">
-						<label class="control-label" for="comp_stem">Comparative stem</label>
-            <input type="text" class="form-control" id="comp_stem" name="comp_stem">
-          </div>
-
-          <div class="form-group">
-            <input id="irreg_super_stem" type="checkbox" aria-label="..." onchange="updateUI()">
-            <label for="irreg_super_stem">Irregular (non-issim) superlative stem?</label>
-          </div>
-          <div class="form-group hidden" id="super_stem_group">
-						<label class="control-label" for="super_stem">Superlative stem</label>
-            <input type="text" class="form-control" id="super_stem" name="super_stem">
-          </div>
-
-					<div class="form-group hidden" id="sg1_group">
-						<label class="control-label" for="sg1m">Masculine Sg.</label>
-            <input type="text" class="form-control" id="sg1m" name="sg1m">
-					</div>
-          <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
-				</div>
-				<div class="jumbotron" style="padding: 10px;">
-					<form role="form" method="post" action="{% url 'create_adjective' %}">
-						{% csrf_token %}
-						{{ form.translation|bootstrap }}
-            <ul class="nav nav-tabs nav-justified">
-              <li class="active"><a data-toggle="tab" href="#positive">Positive</a></li>
-              <li><a data-toggle="tab" href="#comparative">Comparative</a></li>
-              <li><a data-toggle="tab" href="#superlative">Superlative</a></li>
-            </ul>
-            <div class="tab-content">
-              <div id="positive" class="tab-pane fade in active">
-                <table class="table table-bordered">
-                  <tr>
-                    <th>Sg</th>
-                    <th>Masculine</th>
-                    <th>Feminine</th>
-                    <th>Neuter</th>
-                  </tr>
-                  <tr>
-                    <th>1.</th>
-                    <td>{{ form.pos_sg1m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg1f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg1n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>2.</th>
-                    <td>{{ form.pos_sg2m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg2f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg2n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>3.</th>
-                    <td>{{ form.pos_sg3m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg3f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg3n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>4.</th>
-                    <td>{{ form.pos_sg4m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg4f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg4n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>5.</th>
-                    <td>{{ form.pos_sg5m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg5f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg5n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>6.</th>
-                    <td>{{ form.pos_sg6m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg6f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_sg6n|bootstrap_inline }}</td>
-                  </tr>
-                </table>
-                <table class="table table-bordered">
-                  <tr>
-                    <th>Pl</th>
-                    <th>Masculine</th>
-                    <th>Feminine</th>
-                    <th>Neuter</th>
-                  </tr>
-                  <tr>
-                    <th>1.</th>
-                    <td>{{ form.pos_pl1m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl1f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl1n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>2.</th>
-                    <td>{{ form.pos_pl2m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl2f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl2n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>3.</th>
-                    <td>{{ form.pos_pl3m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl3f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl3n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>4.</th>
-                    <td>{{ form.pos_pl4m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl4f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl4n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>5.</th>
-                    <td>{{ form.pos_pl5m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl5f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl5n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>6.</th>
-                    <td>{{ form.pos_pl6m|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl6f|bootstrap_inline }}</td>
-                    <td>{{ form.pos_pl6n|bootstrap_inline }}</td>
-                  </tr>
-                </table>
-              </div>
-              <div id="comparative" class="tab-pane fade">
-                <table class="table table-bordered">
-                  <tr>
-                    <th>Sg</th>
-                    <th>Masculine</th>
-                    <th>Feminine</th>
-                    <th>Neuter</th>
-                  </tr>
-                  <tr>
-                    <th>1.</th>
-                    <td>{{ form.comp_sg1m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg1f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg1n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>2.</th>
-                    <td>{{ form.comp_sg2m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg2f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg2n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>3.</th>
-                    <td>{{ form.comp_sg3m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg3f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg3n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>4.</th>
-                    <td>{{ form.comp_sg4m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg4f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg4n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>5.</th>
-                    <td>{{ form.comp_sg5m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg5f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg5n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>6.</th>
-                    <td>{{ form.comp_sg6m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg6f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_sg6n|bootstrap_inline }}</td>
-                  </tr>
-                </table>
-                <table class="table table-bordered">
-                  <tr>
-                    <th>Pl</th>
-                    <th>Masculine</th>
-                    <th>Feminine</th>
-                    <th>Neuter</th>
-                  </tr>
-                  <tr>
-                    <th>1.</th>
-                    <td>{{ form.comp_pl1m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl1f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl1n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>2.</th>
-                    <td>{{ form.comp_pl2m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl2f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl2n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>3.</th>
-                    <td>{{ form.comp_pl3m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl3f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl3n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>4.</th>
-                    <td>{{ form.comp_pl4m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl4f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl4n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>5.</th>
-                    <td>{{ form.comp_pl5m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl5f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl5n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>6.</th>
-                    <td>{{ form.comp_pl6m|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl6f|bootstrap_inline }}</td>
-                    <td>{{ form.comp_pl6n|bootstrap_inline }}</td>
-                  </tr>
-                </table>
-              </div>
-              <div id="superlative" class="tab-pane fade">
-                <table class="table table-bordered">
-                  <tr>
-                    <th>Sg</th>
-                    <th>Masculine</th>
-                    <th>Feminine</th>
-                    <th>Neuter</th>
-                  </tr>
-                  <tr>
-                    <th>1.</th>
-                    <td>{{ form.sup_sg1m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg1f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg1n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>2.</th>
-                    <td>{{ form.sup_sg2m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg2f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg2n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>3.</th>
-                    <td>{{ form.sup_sg3m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg3f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg3n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>4.</th>
-                    <td>{{ form.sup_sg4m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg4f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg4n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>5.</th>
-                    <td>{{ form.sup_sg5m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg5f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg5n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>6.</th>
-                    <td>{{ form.sup_sg6m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg6f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_sg6n|bootstrap_inline }}</td>
-                  </tr>
-                </table>
-                <table class="table table-bordered">
-                  <tr>
-                    <th>Pl</th>
-                    <th>Masculine</th>
-                    <th>Feminine</th>
-                    <th>Neuter</th>
-                  </tr>
-                  <tr>
-                    <th>1.</th>
-                    <td>{{ form.sup_pl1m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl1f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl1n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>2.</th>
-                    <td>{{ form.sup_pl2m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl2f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl2n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>3.</th>
-                    <td>{{ form.sup_pl3m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl3f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl3n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>4.</th>
-                    <td>{{ form.sup_pl4m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl4f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl4n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>5.</th>
-                    <td>{{ form.sup_pl5m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl5f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl5n|bootstrap_inline }}</td>
-                  </tr>
-                  <tr>
-                    <th>6.</th>
-                    <td>{{ form.sup_pl6m|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl6f|bootstrap_inline }}</td>
-                    <td>{{ form.sup_pl6n|bootstrap_inline }}</td>
-                  </tr>
-                </table>
-              </div>
-						</div>
-            <div class="form-group">
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+{% block form %}
+  {{ form.translation|bootstrap }}
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="tab" href="#positive">Positive</a></li>
+    <li><a data-toggle="tab" href="#comparative">Comparative</a></li>
+    <li><a data-toggle="tab" href="#superlative">Superlative</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="positive" class="tab-pane fade in active">
+      <table class="table table-bordered">
+        <tr>
+          <th>Sg</th>
+          <th>Masculine</th>
+          <th>Feminine</th>
+          <th>Neuter</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.pos_sg1m|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg1f|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg1n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.pos_sg2m|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg2f|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg2n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.pos_sg3m|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg3f|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg3n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>4.</th>
+          <td>{{ form.pos_sg4m|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg4f|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg4n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>5.</th>
+          <td>{{ form.pos_sg5m|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg5f|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg5n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>6.</th>
+          <td>{{ form.pos_sg6m|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg6f|bootstrap_inline }}</td>
+          <td>{{ form.pos_sg6n|bootstrap_inline }}</td>
+        </tr>
+      </table>
+      <table class="table table-bordered">
+        <tr>
+          <th>Pl</th>
+          <th>Masculine</th>
+          <th>Feminine</th>
+          <th>Neuter</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.pos_pl1m|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl1f|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl1n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.pos_pl2m|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl2f|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl2n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.pos_pl3m|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl3f|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl3n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>4.</th>
+          <td>{{ form.pos_pl4m|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl4f|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl4n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>5.</th>
+          <td>{{ form.pos_pl5m|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl5f|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl5n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>6.</th>
+          <td>{{ form.pos_pl6m|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl6f|bootstrap_inline }}</td>
+          <td>{{ form.pos_pl6n|bootstrap_inline }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="comparative" class="tab-pane fade">
+      <table class="table table-bordered">
+        <tr>
+          <th>Sg</th>
+          <th>Masculine</th>
+          <th>Feminine</th>
+          <th>Neuter</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.comp_sg1m|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg1f|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg1n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.comp_sg2m|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg2f|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg2n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.comp_sg3m|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg3f|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg3n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>4.</th>
+          <td>{{ form.comp_sg4m|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg4f|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg4n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>5.</th>
+          <td>{{ form.comp_sg5m|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg5f|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg5n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>6.</th>
+          <td>{{ form.comp_sg6m|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg6f|bootstrap_inline }}</td>
+          <td>{{ form.comp_sg6n|bootstrap_inline }}</td>
+        </tr>
+      </table>
+      <table class="table table-bordered">
+        <tr>
+          <th>Pl</th>
+          <th>Masculine</th>
+          <th>Feminine</th>
+          <th>Neuter</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.comp_pl1m|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl1f|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl1n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.comp_pl2m|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl2f|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl2n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.comp_pl3m|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl3f|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl3n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>4.</th>
+          <td>{{ form.comp_pl4m|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl4f|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl4n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>5.</th>
+          <td>{{ form.comp_pl5m|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl5f|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl5n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>6.</th>
+          <td>{{ form.comp_pl6m|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl6f|bootstrap_inline }}</td>
+          <td>{{ form.comp_pl6n|bootstrap_inline }}</td>
+        </tr>
+      </table>
+    </div>
+    <div id="superlative" class="tab-pane fade">
+      <table class="table table-bordered">
+        <tr>
+          <th>Sg</th>
+          <th>Masculine</th>
+          <th>Feminine</th>
+          <th>Neuter</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.sup_sg1m|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg1f|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg1n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.sup_sg2m|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg2f|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg2n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.sup_sg3m|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg3f|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg3n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>4.</th>
+          <td>{{ form.sup_sg4m|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg4f|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg4n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>5.</th>
+          <td>{{ form.sup_sg5m|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg5f|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg5n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>6.</th>
+          <td>{{ form.sup_sg6m|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg6f|bootstrap_inline }}</td>
+          <td>{{ form.sup_sg6n|bootstrap_inline }}</td>
+        </tr>
+      </table>
+      <table class="table table-bordered">
+        <tr>
+          <th>Pl</th>
+          <th>Masculine</th>
+          <th>Feminine</th>
+          <th>Neuter</th>
+        </tr>
+        <tr>
+          <th>1.</th>
+          <td>{{ form.sup_pl1m|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl1f|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl1n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>2.</th>
+          <td>{{ form.sup_pl2m|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl2f|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl2n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>3.</th>
+          <td>{{ form.sup_pl3m|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl3f|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl3n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>4.</th>
+          <td>{{ form.sup_pl4m|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl4f|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl4n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>5.</th>
+          <td>{{ form.sup_pl5m|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl5f|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl5n|bootstrap_inline }}</td>
+        </tr>
+        <tr>
+          <th>6.</th>
+          <td>{{ form.sup_pl6m|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl6f|bootstrap_inline }}</td>
+          <td>{{ form.sup_pl6n|bootstrap_inline }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 {% endblock %}
 
 {% block scripts %}
-  {% load staticfiles %}
-  <script src="{% static 'js/grammar/decline.js' %}"></script>
+  {{ super() }}
+  <script src="{{ static('js/grammar/decline.js') }}"></script>
 	<script>
   function fill_form(){
     var stem=$("#stem").val();
-    var positive=decline_adjective($("#sg1m").val(), $("#sg1f").val(), $("#sg1n").val(),
-        stem, $("#declination").val());
-    for (var i = 0; i < cases.length; i++){
+    var declination=$("#id_declination").val();
+    var i;
+
+    var positive=decline_adjective($("#sg1m").val(), $("#sg1f").val(), $("#sg1n").val(), stem, declination);
+    for (i = 0; i < cases.length; i++){
       $("#id_pos_"+cases[i]+"m").val(positive.m[cases[i]]);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_pos_"+cases[i]+"f").val(positive.f[cases[i]]);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_pos_"+cases[i]+"n").val(positive.n[cases[i]]);}
 
     var comp;
@@ -370,11 +344,11 @@
       comp=comparative($("#comp_stem").val());}
     else{
       comp=comparative(stem);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_comp_"+cases[i]+"m").val(comp.m[cases[i]]);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_comp_"+cases[i]+"f").val(comp.f[cases[i]]);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_comp_"+cases[i]+"n").val(comp.n[cases[i]]);}
 
     var sup;
@@ -382,30 +356,24 @@
       sup=superlative($("#super_stem").val(), false);}
     else{
       sup=superlative(stem, true);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_sup_"+cases[i]+"m").val(sup.m[cases[i]]);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_sup_"+cases[i]+"f").val(sup.f[cases[i]]);}
-    for (var i = 0; i < cases.length; i++){
+    for (i = 0; i < cases.length; i++){
       $("#id_sup_"+cases[i]+"n").val(sup.n[cases[i]]);}
   }
   function updateUI(){
-    if ($("#irreg_super_stem").is(":checked")){
-      $("#super_stem_group").removeClass("hidden");}
+    if ($("#id_declination").val() == "M"){
+      $("#sg1_group").slideDown();}
     else{
-      $("#super_stem_group").addClass("hidden");}
-
-    if ($("#irreg_comp_stem").is(":checked")){
-      $("#comp_stem_group").removeClass("hidden");}
-    else{
-      $("#comp_stem_group").addClass("hidden");}
-
-    if ($("#declination").val() == "3"){
-      $("#sg1_group").removeClass("hidden");}
-    else{
-      $("#sg1_group").addClass("hidden");}
+      $("#sg1_group").slideUp();}
   }
   $(document).ready(function(){
+    $("#comp_stem_group").slideUp(0);
+    $("#super_stem_group").slideUp(0);
+    $("#sg1_group").slideUp(0);
+    $("#id_declination").on("change", updateUI);
     updateUI();
   });
 	</script>

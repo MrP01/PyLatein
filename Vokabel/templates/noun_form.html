@@ -1,128 +1,103 @@
-{% extends 'layout.html' %}
+{% extends 'form.html' %}
 
 {% block head %}
+  {{ super() }}
 	<title>Create Noun - PyLatein</title>
-	{% load bootstrap %}
 {% endblock %}
 
-{% block body %}
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-        <h1 class="page-header">Create a new Noun!</h1>
-				<div class="jumbotron" style="background-color: orange; padding: 10px;">
-					<h3>Fill the table quickly!</h3>
-					<div class="form-group">
-						<label class="control-label" for="declination">Declination</label>
-            <select class="form-control" id="declination" name="declination" onchange="update_auto_checkbox()">
-              <option value="1A">A-Declination</option>
-              <option value="1O">O-Declination</option>
-              <option value="3C">3. Declination Consonant Stems</option>
-              <option value="3M">3. Declination Mixed Stems</option>
-              <option value="3I">3. Declination I-Stems</option>
-              <option value="5E">E-Declination</option>
-              <option value="5U">U-Declination</option>
-            </select>
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="stem">Stem</label>
-            <input type="text" class="form-control" id="stem" name="stem">
-					</div>
-          <div class="form-group">
-            <input id="auto_sg1" type="checkbox" aria-label="..." onchange="updateUI()">
-            <label for="auto_sg1">Auto 1. Case Sg.?</label>
-          </div>
-          <div class="form-group hidden" id="sg1_group">
-            <label class="control-label" for="sg1">Nominative Sg.</label>
-            <input type="text" class="form-control" id="sg1" name="sg1">
-          </div>
-          <button class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
-				</div>
-				<div class="jumbotron" style="padding: 10px;">
-					<form role="form" method="post" action="{% url 'create_noun' %}">
-						{% csrf_token %}
-						{{ form.translation|bootstrap }}
-						{{ form.genus|bootstrap }}
-						<table class="table table-bordered table-responsive">
-							<tr>
-								<th></th>
-								<th>Singular</th>
-								<th>Plural</th>
-							</tr>
-							<tr>
-								<th>1.</th>
-								<td>{{ form.sg1|bootstrap_inline }}</td>
-								<td>{{ form.pl1|bootstrap_inline }}</td>
-							</tr>
-							<tr>
-								<th>2.</th>
-								<td>{{ form.sg2|bootstrap_inline }}</td>
-								<td>{{ form.pl2|bootstrap_inline }}</td>
-							</tr>
-							<tr>
-								<th>3.</th>
-								<td>{{ form.sg3|bootstrap_inline }}</td>
-								<td>{{ form.pl3|bootstrap_inline }}</td>
-							</tr>
-							<tr>
-								<th>4.</th>
-								<td>{{ form.sg4|bootstrap_inline }}</td>
-								<td>{{ form.pl4|bootstrap_inline }}</td>
-							</tr>
-							<tr>
-								<th>5.</th>
-								<td>{{ form.sg5|bootstrap_inline }}</td>
-								<td>{{ form.pl5|bootstrap_inline }}</td>
-							</tr>
-							<tr>
-								<th>6.</th>
-								<td>{{ form.sg6|bootstrap_inline }}</td>
-								<td>{{ form.pl6|bootstrap_inline }}</td>
-							</tr>
-						</table>
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary">Submit</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+{% block header %}Create a new Noun!{% endblock %}
+{% block form_url %}{{ request.path }}{% endblock %}
+
+{% block helpers %}
+  {{ form.declination|bootstrap }}
+  {{ form.genus|bootstrap }}
+  <div class="form-group">
+    <label class="control-label" for="stem">Stem</label>
+    <input type="text" class="form-control" id="stem" name="stem">
+  </div>
+  <div class="form-group">
+    <input id="irreg_sg1" type="checkbox" aria-label="..." onclick="$('#irreg_group').slideToggle()">
+    <label for="irreg_sg1">Irregular 1. Case Sg.?</label>
+  </div>
+  <div class="form-group" id="irreg_group">
+    <label class="control-label" for="sg1">Nominative Sg.</label>
+    <input type="text" class="form-control" id="sg1" name="sg1">
+  </div>
+  <div class="form-group">
+    <button type="button" class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
+  </div>
+{% endblock %}
+
+{% block form %}
+  {{ form.translation|bootstrap }}
+  <table class="table table-bordered table-responsive">
+    <tr>
+      <th></th>
+      <th>Singular</th>
+      <th>Plural</th>
+    </tr>
+    <tr>
+      <th>1.</th>
+      <td>{{ form.sg1|bootstrap_inline }}</td>
+      <td>{{ form.pl1|bootstrap_inline }}</td>
+    </tr>
+    <tr>
+      <th>2.</th>
+      <td>{{ form.sg2|bootstrap_inline }}</td>
+      <td>{{ form.pl2|bootstrap_inline }}</td>
+    </tr>
+    <tr>
+      <th>3.</th>
+      <td>{{ form.sg3|bootstrap_inline }}</td>
+      <td>{{ form.pl3|bootstrap_inline }}</td>
+    </tr>
+    <tr>
+      <th>4.</th>
+      <td>{{ form.sg4|bootstrap_inline }}</td>
+      <td>{{ form.pl4|bootstrap_inline }}</td>
+    </tr>
+    <tr>
+      <th>5.</th>
+      <td>{{ form.sg5|bootstrap_inline }}</td>
+      <td>{{ form.pl5|bootstrap_inline }}</td>
+    </tr>
+    <tr>
+      <th>6.</th>
+      <td>{{ form.sg6|bootstrap_inline }}</td>
+      <td>{{ form.pl6|bootstrap_inline }}</td>
+    </tr>
+  </table>
 {% endblock %}
 
 {% block scripts %}
-  {% load staticfiles %}
-  <script src="{% static 'js/grammar/decline.js' %}"></script>
-{#  <script src="/static/js/grammar/decline.js"></script>#}
+  {{ super() }}
+  <script src="{{ static('js/grammar/decline.js') }}"></script>
 	<script>
-  function fill_form(){
-    var sg1=$("#sg1").val();
-    if ($("#auto_sg1").is(":checked")){
-      sg1="__auto__";
+    function fill_form(){
+      var sg1=$("#sg1").val();
+      if (! $("#irreg_sg1").is(":checked")){
+        sg1="__auto__";
+      }
+      var result=decline(sg1, $("#stem").val(),
+          $("#id_genus").val(), $("#id_declination").val());
+      for (var i = 0; i < cases.length; i++){
+        $("#id_"+cases[i]).val(result[cases[i]]);
+      }
     }
-    var result=decline(sg1, $("#stem").val(),
-        $("#id_genus").val(), $("#declination").val());
-    for (var i = 0; i < cases.length; i++){
-      $("#id_"+cases[i]).val(result[cases[i]]);
+    function updateUI(){
+      if (["C", "M", "I"].indexOf($("#id_declination").val()) > -1){
+        $("#irreg_sg1").prop("checked", true);
+        $("#irreg_group").slideDown();
+      }
+      else{
+        $("#irreg_sg1").prop("checked", false);
+        $("#irreg_group").slideUp();
+      }
     }
-  }
-  function update_auto_checkbox(){
-    if (["3C", "3M", "3I"].indexOf($("#declination").val()) > -1){
-      $("#auto_sg1").prop("checked", false);}
-    else{
-      $("#auto_sg1").prop("checked", true);}
-    updateUI();
-  }
-  function updateUI(){
-    if ($("#auto_sg1").is(":checked")){
-      $("#sg1_group").addClass("hidden");
-    }
-    else{
-      $("#sg1_group").removeClass("hidden");}
-  }
-  $(document).ready(function(){
-    update_auto_checkbox();
-    updateUI();
-  });
+    $(document).ready(function(){
+      $("#irreg_group").slideUp(0);
+      $("#id_declination").on("change", updateUI);
+      updateUI();
+    });
 	</script>
 {% endblock %} scripts %}

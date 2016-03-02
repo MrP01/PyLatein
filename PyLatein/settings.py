@@ -37,7 +37,7 @@ PREREQ_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-	"bootstrapform"
+	"bootstrapform_jinja"
 )
 
 PROJECT_APPS=(
@@ -62,12 +62,16 @@ ROOT_URLCONF = "PyLatein.urls"
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            os.path.join(BASE_DIR, "templates"),
-            os.path.join(BASE_DIR, "Vokabel", "templates"),
-        ],
+        "BACKEND": "django_jinja.backend.Jinja2",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
+        "OPTIONS": {
+            "match_extension": (".html", ".jinja"),
+        }
+    },
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "APP_DIRS": False,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",

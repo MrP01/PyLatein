@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">{% block header %}{% endblock %}</h1>
+{#  {% if request.session.auto_add_vocgroup %}#}
+{#    <h3>Hello, automatic add to Vocgroup {{ request.session.auto_add_vocgroup[1] }}</h3>#}
+{#  {% endif %}#}
+{##}
+{#  <label for="vocgroup_select">Vocgroups</label>#}
+{#  <select id="vocgroup_select" class="selectpicker" multiple data-live-search="true">#}
+{#    <option>Lektion 1</option>#}
+{#    <option>Lektion 2</option>#}
+{#    <option>Lektion 3</option>#}
+{#  </select>#}
+
+{#  <ul id="vocgroup_list" class="list-group">#}
+{#  </ul>#}
+{#  <div class="form-group">#}
+{#    <label for="vocgroup_select">VocGroup</label>#}
+{#    <select id="vocgroup_select" class="form-control">#}
+{#    </select>#}
+{#  </div>#}
+{#  <div class="form-group">#}
+{#    <button class="btn btn-success" onclick="$('#vocgroup_list').append($('<li/>').addClass('list-group-item').html($('#vocgroup_select').val()))">Add</button>#}
+{#  </div>#}
+
+  <form action="{% block form_url %}{% endblock %}" method="post" role="form">
+    {% csrf_token %}
+    {{ form.vocgroups|bootstrap }}
+    <div class="jumbotron">
+      {% block helpers %}
+      {% endblock %}
+    </div>
+    {% block form %}
+    {% endblock %}
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+{% endblock %}
