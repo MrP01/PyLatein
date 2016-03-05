@@ -15,6 +15,7 @@ AbstractTrainer.prototype.getSolution = function(voc){
 
 AbstractTrainer.prototype.isCorrect = function(val, voc){
     //Not implemented
+    alert("'Trainer.isCorrect' not implemented!");
     return false;
 };
 
@@ -30,14 +31,18 @@ AbstractTrainer.prototype.check = function(){
     var trainer=this;   //So 'this' is always the actual trainer
     if (this.isCorrect(this.input.val(), this.current_voc)){
         this.message("correct");
-        setTimeout(function(){trainer.next()}, 1000);
+        this.input.val(this.getSolution(this.current_voc));
+        setTimeout(function(){trainer.next()}, 1500);
     }
     else{
-        this.message("wrong", 1200);
+        this.message("wrong", 2500);
         this.wrongCount+=1;
-        if (this.wrongCount >= 2){
+        if (this.wrongCount >= 2 || this.input.val() == "?"){
             this.input.val(this.getSolution(this.current_voc));
-            setTimeout(function(){trainer.next()}, 2000);
+            setTimeout(function(){trainer.next()}, 3000);
+        }
+        else{
+            this.input.val("");
         }
     }
 };

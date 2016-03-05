@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block head %}
+  {{ super() }}
 	<title>Trainer - PyLatein</title>
 {% endblock %}
 
@@ -12,7 +13,7 @@
 {% endblock %}
 
 {% block scripts %}
-  {% load staticfiles %}
+  {{ super() }}
   <script src="{{ static('trainer/base.js') }}"></script>
   <script src="{{ static('trainer/translation.js') }}"></script>
   <script>

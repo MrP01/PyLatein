@@ -248,3 +248,5 @@ class VocGroup(models.Model):
 
     def __str__(self):
         return self.name
+
+VOCMODELS={0: Noun, 1: Verb, 2: Adjective}
