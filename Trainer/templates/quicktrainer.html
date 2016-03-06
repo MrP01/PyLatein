@@ -8,8 +8,9 @@
 {% block content %}
   <h4 id="prompt">Prompt</h4>
   <label class="control-label">Translation</label>
-  <input id="input" class="form-control" type="text" placeholder="Enter translation here" onchange="trainer.check()">
-  <div id="my_alert" class="alert alert-success">Start!</div>
+  <input id="input" class="form-control" type="text" placeholder="Enter translation here">
+  <div id="correct_alert" class="alert alert-success">Correct!</div>
+  <div id="wrong_alert" class="alert alert-danger">Sorry, but that was wrong!</div>
 {% endblock %}
 
 {% block scripts %}
@@ -17,31 +18,13 @@
   <script src="{{ static('trainer/base.js') }}"></script>
   <script src="{{ static('trainer/translation.js') }}"></script>
   <script>
-    $(document).ready(function(){
-      $("#my_alert").slideUp(0);
-      trainer = new TranslationTrainer("#input", "#prompt", {{ vocs|safe }});
-
-      trainer.message = function(msg, timeout){
-        var alert=$("#my_alert");
-        if (msg == "correct"){
-          alert.removeClass("alert-danger").addClass("alert-success");
-          alert.html("Correct!");
-          alert.slideDown(400);
-        }
-        else if (msg == "wrong"){
-          alert.removeClass("alert-success").addClass("alert-danger");
-          alert.html("Sorry, but that was wrong");
-          alert.slideDown(400);
-        }
-        if (timeout){
-          setTimeout(function(){trainer.clearMsg()}, timeout);
-        }
-      };
-      trainer.clearMsg = function(){
-        $("#my_alert").slideUp(500);
-      };
-
-      trainer.start();
-    });
+  $(document).ready(function(){
+    var vocs={{ vocs|safe }};
+    var controller = new SimpleController(new Trainer(), vocs, new InputWidget("#input"), new SlidingNotifier("#correct_alert", "#wrong_alert"), "#prompt");
+    controller.input.translation.on("change", function(){controller.check()});
+    controller.notifier.correct.slideUp(500);
+    controller.notifier.wrong.slideUp(500);
+    controller.start()
+  })
   </script>
 {% endblock %}
