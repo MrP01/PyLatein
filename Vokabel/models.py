@@ -65,7 +65,10 @@ class Noun(Vocable):
     pl6=models.CharField(max_length=128)
 
     def __str__(self):
-        return "{sg1}, {sg2} [{genus}]".format(sg1=self.sg1, sg2=self.sg2, genus=self.genus)
+        if self.sg1 == "-":
+            return "{pl1}, {pl2} [{genus}] (Pl.)".format(pl1=self.pl1, pl2=self.pl2, genus=self.genus)
+        else:
+            return "{sg1}, {sg2} [{genus}]".format(sg1=self.sg1, sg2=self.sg2, genus=self.genus)
 
 class Verb(Vocable):
     conjugation=models.CharField(max_length=2,

@@ -27,7 +27,7 @@ var declinations={
 
 adjective_declinations=["AO", "M"];
 
-function decline(sg1, stem, genus, declination){
+function decline(sg1, stem, genus, declination, plonly){
     var result={};
 
     var dec=declinations[declination];
@@ -55,6 +55,11 @@ function decline(sg1, stem, genus, declination){
     result.pl5=result.pl1+"!";
     if (genus == "m" && declination == "O" && result.sg1.slice(-2) == "us"){  //Vocative on '-us'
         result.sg5=stem+"e!";}
+
+    if (plonly){
+        for (i = 0; i <= 6; i++){
+            result["sg"+i]="-"}
+    }
 
     return result;
 }

@@ -11,7 +11,7 @@ class AbstractTrainerView(generic.TemplateView):
 
     def choose_vocs(self):
         vocs=[]
-        ids=random.sample(self.allIds(), 10)
+        ids=random.sample(self.allIds(), 20)
         for c, model in VOCMODELS.items():
             vocs+=list(model.objects.filter(id__in=[i[1] for i in ids if i[0] == c]))
         random.shuffle(vocs)

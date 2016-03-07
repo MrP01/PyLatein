@@ -24,6 +24,10 @@
     <input type="text" class="form-control" id="sg1" name="sg1">
   </div>
   <div class="form-group">
+    <input id="pl_only" type="checkbox" aria-label="...">
+    <label for="pl_only">Plural only</label>
+  </div>
+  <div class="form-group">
     <button type="button" class="btn btn-default btn-lg" onclick="fill_form()">Fill!</button>
   </div>
 {% endblock %}
@@ -79,7 +83,7 @@
         sg1="__auto__";
       }
       var result=decline(sg1, $("#stem").val(),
-          $("#id_genus").val(), $("#id_declination").val());
+        $("#id_genus").val(), $("#id_declination").val(), $("#pl_only").is(":checked"));
       for (var i = 0; i < cases.length; i++){
         $("#id_"+cases[i]).val(result[cases[i]]);
       }

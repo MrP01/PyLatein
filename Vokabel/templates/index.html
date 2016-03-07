@@ -45,7 +45,7 @@
       </tr>
       {% for adjective in adjectives %}
         <tr>
-          <td><a href="{{ url('view_verb', pk=adjective.id) }}">{{ adjective }}</a></td>
+          <td><a href="{{ url('view_adjective', pk=adjective.id) }}">{{ adjective }}</a></td>
           <td>{{ adjective.translation }}</td>
         </tr>
       {% endfor %}
