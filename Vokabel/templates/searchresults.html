@@ -17,7 +17,7 @@
         </tr>
         {% for noun in nouns %}
           <tr>
-            <td><a href="{{ url('view_noun', pk=noun.id) }}">{{ noun.sg1 }}, {{ noun.sg2 }} [{{ noun.genus }}]</a></td>
+            <td><a href="{{ url('vokabel:view_noun', pk=noun.id) }}">{{ noun }}</a></td>
             <td>{{ noun.translation }}</td>
           </tr>
         {% endfor %}
@@ -34,7 +34,7 @@
       </tr>
       {% for verb in verbs %}
         <tr>
-          <td><a href="{{ url('view_verb', pk=verb.id) }}">{{ verb.present_sg1 }}, {{ verb.present_sg2 }}, {{ verb.infinitive }}, {{ verb.perfect_sg1 }}</a></td>
+          <td><a href="{{ url('vokabel:view_verb', pk=verb.id) }}">{{ verb }}</a></td>
           <td>{{ verb.translation }}</td>
         </tr>
       {% endfor %}
@@ -51,7 +51,7 @@
       </tr>
       {% for adjective in adjectives %}
         <tr>
-          <td><a href="{{ url('view_adjective', pk=adjective.id) }}">{{ adjective.pos_sg1m }}/{{ adjective.pos_sg1f }}/{{ adjective.pos_sg1n }}</a></td>
+          <td><a href="{{ url('vokabel:view_adjective', pk=adjective.id) }}">{{ adjective }}</a></td>
           <td>{{ adjective.translation }}</td>
         </tr>
       {% endfor %}

@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 import Vokabel.views
 
-# app_name="vokabel"
+app_name="vokabel"
 urlpatterns = [
     url(r"search", Vokabel.views.SearchView.as_view(), name="search"),
     url(r"createNoun$", Vokabel.views.CreateNoun.as_view(), name="create_noun"),

@@ -2,7 +2,7 @@
 
 {% block head %}
   {{ super() }}
-	<title>PyLatein - Latein-Trainer</title>
+  <title>PyLatein - Latein-Trainer</title>
 {% endblock %}
 
 {% block cols %}
@@ -15,7 +15,7 @@
       </tr>
       {% for noun in nouns %}
         <tr>
-          <td><a href="{{ url('view_noun', pk=noun.id) }}">{{ noun }}</a></td>
+          <td><a href="{{ url('vokabel:view_noun', pk=noun.id) }}">{{ noun }}</a></td>
           <td>{{ noun.translation }}</td>
         </tr>
       {% endfor %}
@@ -30,7 +30,7 @@
       </tr>
       {% for verb in verbs %}
         <tr>
-          <td><a href="{{ url('view_verb', pk=verb.id) }}">{{ verb }}</a></td>
+          <td><a href="{{ url('vokabel:view_verb', pk=verb.id) }}">{{ verb }}</a></td>
           <td>{{ verb.translation }}</td>
         </tr>
       {% endfor %}
@@ -45,7 +45,7 @@
       </tr>
       {% for adjective in adjectives %}
         <tr>
-          <td><a href="{{ url('view_adjective', pk=adjective.id) }}">{{ adjective }}</a></td>
+          <td><a href="{{ url('vokabel:view_adjective', pk=adjective.id) }}">{{ adjective }}</a></td>
           <td>{{ adjective.translation }}</td>
         </tr>
       {% endfor %}

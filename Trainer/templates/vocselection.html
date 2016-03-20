@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+	<title>Select Vocabulary - PyLatein</title>
+{% endblock %}
+
+{% block content %}
+  <h1>Select Vocgroups</h1>
+  <form action="{{ url('trainer:trainer') }}" method="get" role="form">
+{#    {% csrf_token %}#}
+    {{ form.vocgroups|bootstrap }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+{% endblock %}

@@ -6,11 +6,20 @@
 {% endblock %}
 
 {% block content %}
-  <h4 id="prompt">Prompt</h4>
-  <label class="control-label">Translation</label>
-  <input id="input" class="form-control" type="text" placeholder="Enter translation here">
-  <div id="correct_alert" class="alert alert-success">Correct!</div>
-  <div id="wrong_alert" class="alert alert-danger">Sorry, but that was wrong!</div>
+  <div>
+{#    Box animation#}
+  </div>
+  <div>
+    <h4 id="prompt">Prompt</h4>
+    <div class="form-group">
+      <label class="control-label">Translation</label>
+      <input id="input" class="form-control" type="text" placeholder="Enter translation here">
+    </div>
+    <div id="correct_alert" class="alert alert-success">Correct!</div>
+    <div id="wrong_alert" class="alert alert-danger">Sorry, but that was wrong!</div>
+    <a id="skip" href="#">Don't know?</a>
+    <button id="check" class="btn btn-success" style="float: right;">Check!</button>
+  </div>
 {% endblock %}
 
 {% block scripts %}
@@ -20,10 +29,12 @@
   <script>
   $(document).ready(function(){
     var vocs={{ vocs|safe }};
-    var controller = new SimpleController(new Trainer(), vocs, new InputWidget("#input"), new SlidingNotifier("#correct_alert", "#wrong_alert"), "#prompt");
-    controller.input.translation.on("change", function(){controller.check()});
-    controller.notifier.correct.slideUp(500);
-    controller.notifier.wrong.slideUp(500);
+    var controller = new BoxController(vocs, new Trainer(), new InputWidget("#input"), new SlidingNotifier("#correct_alert", "#wrong_alert"), "#prompt");
+    $("#skip").on("click", function(){controller.skip(); return false});
+    $("#check").on("click", function(){controller.check(); return false});
+    controller.input.translation.on("keypress", function(event){if (event.keyCode == 13){controller.check();}});
+    controller.notifier.correct.slideUp(0);
+    controller.notifier.wrong.slideUp(0);
     controller.start()
   })
   </script>
